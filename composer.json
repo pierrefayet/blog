@@ -1,0 +1,24 @@
+{
+    "name": "pierre/projet5-blog",
+    "autoload": {
+        "psr-4": {
+            "Pierre\\Projet5Blog\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "pierre.fayet",
+            "email": "piero69450@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.7",
+        "ext-pdo": "*",
+        "tracy/tracy": "^2.10"
+    },
+    "config": {
+        "preferred-install": {
+            "twig/twig": "source"
+        }
+    }
+}
