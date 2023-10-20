@@ -7,5 +7,4 @@ return [
         'contact' => [
         'ContactMethod' => 'ContactController@contactMethod',
         ],
-// Ajoutez d'autres routes ici
 ];

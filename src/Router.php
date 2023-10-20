@@ -12,11 +12,13 @@ class Router
 
     public function routeRequest($page, $method)
     {
+        var_dump($this->routes[$page][$method]);
         if (isset($this->routes[$page][$method])) {
         list($controllerName, $methodName) = explode('@', $this->routes[$page][$method]);
         $controllerClass = 'App\Controller\\' . ucfirst(strtolower($controllerName)) . 'Controller';
 
         if (class_exists($controllerClass) && method_exists($controllerClass, $methodName)) {
+            var_dump('coucou');
         $controller = new $controllerClass();
             return call_user_func([$controller, $methodName]);
         }

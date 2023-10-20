@@ -1,10 +1,12 @@
 <?php
-// controllers/HomeController.php
+
 namespace Pierre\Projet5Blog\Controller;
 
+use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Twig\Loader\FilesystemLoader;
 
 class HomeController
 {
@@ -15,13 +17,9 @@ class HomeController
      */
     public function homepage() : void
     {
-        //$posts = getPosts();
+        $loader = new FilesystemLoader(__DIR__  .'../../Templates');
+        $twig = new Environment($loader);
 
-        // Chargez et affichez le modèle Twig
-        $loader = new \Twig\Loader\FilesystemLoader(__DIR__  .'../Templates');
-        $twig = new \Twig\Environment($loader);
-
-        // Rendre le modèle "homepage.twig"
         $template = $twig->load("homePage.twig");
         echo $template->render(['posts' => 'tata']);
     }
