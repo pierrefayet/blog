@@ -29,6 +29,4 @@ class ConnectDB
         }
         return self::$pdo;
     }
-
-
 }
