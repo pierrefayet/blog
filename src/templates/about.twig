@@ -1,0 +1,42 @@
+{% extends 'layout/layout.twig' %}
+
+{% block content %}
+    <main>
+        <section>
+            <h2>Qui suis-je ?</h2>
+            <p>Je suis Pierre Fayet, un professionnel en reconversion. J'ai passé de nombreuses années dans le domaine de la logistique, mais je suis actuellement en transition pour devenir développeur backend spécialisé en PHP/Symfony.</p>
+        </section>
+        <section>
+            <h2>Mon parcours</h2>
+            <p>À 38 ans, je suis également fier d'être le père d'une petite fille, qui est ma principale source de motivation pour réussir cette transition de carrière.</p>
+            <p>J'ai décidé de me lancer dans le développement web car j'ai toujours été fasciné par la programmation et les possibilités qu'elle offre. Je suis déterminé à acquérir de nouvelles compétences et à contribuer au monde du développement informatique.</p>
+        </section>
+        <section>
+            <h2>Contactez-moi</h2>
+            <p>Si vous souhaitez en savoir plus sur mon parcours, discuter de projets ou simplement échanger des idées, n'hésitez pas à me contacter. Je suis ouvert aux opportunités de collaboration et prêt à relever de nouveaux défis.</p>
+            <form method="post">
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <form method="post" class="border p-4">
+                                <div class="mb-3">
+                                    <label for="nom" class="form-label">Nom</label>
+                                    <input type="text" class="form-control" id="nom" name="nom" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea class="form-control" id="message" rows="5" name="message" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Envoyer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </main>
+{% endblock %}

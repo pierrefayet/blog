@@ -5,20 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Blog PHP - Projet 5 - Développeur d'application PHP">
     <meta name="author" content="Pierre Fayet">
-
-    <title>Projet 5 - PHP - Développeur d'application Symfony - OpenClassrooms</title>
-    <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="/public/asset/css/styles.css">
+    <title>Projet 5 - PHP - Développeur d'application Symfony - OpenClassrooms</title>
 </head>
 <body>
-    {% extends 'layout/layout.twig' %}
+{% include'layout/header.twig' %}
 
-    {% block content %}
+{% block content %}
 
-        {% extends 'layout/layout.twig' %}
+{% endblock %}
 
-    {% endblock %}
-
-    {% extends 'layout/footer.twig' %}
+{% include 'layout/footer.twig' %}
 </body>
 </html>

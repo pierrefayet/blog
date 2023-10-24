@@ -1,1 +1,17 @@
-<?php
+{% extends 'layout/layout.twig' %}
+
+    {% block content %}
+<div class="container">
+    <h1>Liste des Articles</h1>
+
+    <ul>
+        {% for post in posts %}
+        <li>
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+

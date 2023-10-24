@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'home' => [
-        'DefaultMethod' => 'HomeController@defaultMethod',
-        ],
-        'contact' => [
-        'ContactMethod' => 'ContactController@contactMethod',
-        ],
+    'home' => 'homePage',
+    'about' => 'about',
+    'post' => 'post',
+    'addPost' => 'addPost',
+    'listing' => 'listing',
+    'displayArticle' => 'displayArticle',
 ];

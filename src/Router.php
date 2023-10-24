@@ -1,30 +1,42 @@
 <?php
 
-namespace Pierre\Projet5Blog;
+namespace App;
+
+use App\Controller\PageController;
+use App\Controller\PostController;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+
 class Router
 {
     private array $routes;
+    private PageController $pageController;
+    private PostController $postController;
 
-    public function __construct(array $routes)
+    public function __construct(array $routes, PageController $pageController, PostController $postController)
     {
-    $this->routes = $routes;
+        $this->routes = $routes;
+        $this->pageController = $pageController;
+        $this->postController = $postController;
+
     }
 
-    public function routeRequest($page, $method)
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    public function routeRequest(string $page): string
     {
-        var_dump($this->routes[$page][$method]);
-        if (isset($this->routes[$page][$method])) {
-        list($controllerName, $methodName) = explode('@', $this->routes[$page][$method]);
-        $controllerClass = 'App\Controller\\' . ucfirst(strtolower($controllerName)) . 'Controller';
-
-        if (class_exists($controllerClass) && method_exists($controllerClass, $methodName)) {
-            var_dump('coucou');
-        $controller = new $controllerClass();
-            return call_user_func([$controller, $methodName]);
+        if (isset($this->routes[$page])) {
+            $this->pageController->displayPage($this->routes[$page]);
+            if ($page === 'post') {
+                $this->postController->addPost();
+            }
         }
-    }
 
-    // Gérer le cas où la route n'existe pas
-    return 'echo Page non trouvée';
+        // Je gére le cas où la route n'existe pas
+        return 'echo Page non trouvée';
     }
 }

@@ -1,8 +1,8 @@
 {
-    "name": "pierre/projet5-blog",
+    "name": "pierre/projet-5-blog",
     "autoload": {
         "psr-4": {
-            "Pierre\\Projet5Blog\\": "src/"
+            "App\\": "src/"
         }
     },
     "authors": [
@@ -14,11 +14,15 @@
     "require": {
         "twig/twig": "^3.7",
         "ext-pdo": "*",
-        "tracy/tracy": "^2.10"
+        "tracy/tracy": "^2.10",
+        "symfony/asset": "^6.3"
     },
     "config": {
         "preferred-install": {
             "twig/twig": "source"
         }
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "*"
     }
 }
