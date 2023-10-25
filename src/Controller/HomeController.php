@@ -7,22 +7,22 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
+use PDO;
 
-class PageController
+class HomeController
 {
     /**
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws LoaderError
      */
-    public function displayPage(string $page): string
+    public function home(): string
     {
+
         $loader = new FilesystemLoader('templates/');
         $twig = new Environment($loader);
 
-        $template = $twig->load(sprintf('%s.twig', $page));
+        $template = $twig->load('homePage.twig');
         return $template->render();
     }
 }
-
-

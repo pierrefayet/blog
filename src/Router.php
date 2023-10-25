@@ -2,8 +2,9 @@
 
 namespace App;
 
-use App\Controller\PageController;
 use App\Controller\PostController;
+use App\Model\Post;
+use PDO;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -11,15 +12,12 @@ use Twig\Error\SyntaxError;
 class Router
 {
     private array $routes;
-    private PageController $pageController;
-    private PostController $postController;
+    private PDO $pdo;
 
-    public function __construct(array $routes, PageController $pageController, PostController $postController)
+    public function __construct(array $routes, PDO $pdo)
     {
         $this->routes = $routes;
-        $this->pageController = $pageController;
-        $this->postController = $postController;
-
+        $this->pdo = $pdo;
     }
 
     /**
@@ -27,12 +25,15 @@ class Router
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function routeRequest(string $page): string
+    public function routeRequest(string $page, string $controller): string
     {
-        if (isset($this->routes[$page])) {
-            $this->pageController->displayPage($this->routes[$page]);
-            if ($page === 'post') {
-                $this->postController->addPost();
+        if (isset($this->routes[$controller][$page])) {
+            var_dump($this->routes[$controller][$page]);
+            if ($controller === 'post') {
+                $model = new Post($this->pdo);
+                $controller = new PostController($model);
+                $action = $this->routes['post'][$page];
+                return $controller->$action();
             }
         }
 

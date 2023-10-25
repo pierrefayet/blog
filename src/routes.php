@@ -1,10 +1,11 @@
 <?php
 
 return [
-    'home' => 'homePage',
-    'about' => 'about',
-    'post' => 'post',
-    'addPost' => 'addPost',
-    'listing' => 'listing',
-    'displayArticle' => 'displayArticle',
+    'post' => [
+        'post' => 'post',
+        'add' => 'add',
+        'index' => 'index',
+        'home' => 'home',
+        'about' => 'about',
+    ],
 ];
