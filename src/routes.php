@@ -4,7 +4,7 @@ return [
     'PostController' => [
         'add' => 'add',
     ],
-    'HomeController' => [
+    'HomePageController' => [
         'home' => 'home',
     ],
     'ListingController' => [

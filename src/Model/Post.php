@@ -53,7 +53,19 @@ class Post
         }
     }
 
-    public function delete(): bool
+    public function getNewPosts(): array
+    {
+        try {
+            $db = "SELECT * FROM posts";
+            $stmt = $this->db->query($db);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log('Erreur lors de la récupération des posts : ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function deletePost(): bool
     {
         try {
             $stmt = $this->db->prepare('DELETE FROM posts WHERE id = :postId');

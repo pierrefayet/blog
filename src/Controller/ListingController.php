@@ -15,7 +15,7 @@ class ListingController
 
     public function __construct(Post $postModel)
     {
-        $this->postModel = $postModel; // on injecte le modèle dans le constructeur;
+        $this->postModel = $postModel;
     }
 
     /**

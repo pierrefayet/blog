@@ -27,7 +27,6 @@ class Router
      */
     public function routeRequest(string $page, string $controllerName): string
     {
-        var_dump('$page:',$page,'$controllerName:',  $controllerName);
         if (isset($this->routes[$controllerName])) {
             $actionName = $this->routes[$controllerName][$page] ?? null;
             if ($actionName !== null) {
@@ -42,7 +41,6 @@ class Router
             }
         }
 
-        // Si aucune correspondance n'est trouvée, retournez une réponse 404
         http_response_code(404);
         return 'Page non trouvée';
     }

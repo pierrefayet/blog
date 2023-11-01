@@ -13,6 +13,6 @@ $pdo = $dbConnect->getDb();
 Debugger::enable();
 $router = new Router($routes, $pdo);
 $page = $_GET['action'] ?? 'home';
-$controller = $_GET['controller'] ?? 'HomeController';
+$controller = $_GET['controller'] ?? 'HomePageController';
 $response = $router->routeRequest($page, $controller);
 echo $response;

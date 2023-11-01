@@ -43,17 +43,15 @@ class PostController
                 $result = $this->postModel->insertPost($title, $content);
                 $params = [];
             if ($result) {
-                var_dump('un result trouvé');
                $params ['successMessage'] = 'L\'article a été ajouté avec succès.';
             } else {
-                var_dump('pas de result trouvé');
                 $params ['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'article.';
             }
-            var_dump('on passe ici');
             // J'affiche le formulaire d'ajout de post
 
             return $template->render($params);
         }
+
         return $template->render();
     }
 }

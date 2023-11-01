@@ -5,7 +5,7 @@ namespace App\Model;
 use PDO;
 use PDOException;
 
-class Connection
+class Comment
 {
     private PDO $db;
 
@@ -14,24 +14,23 @@ class Connection
         $this->db = $db;
     }
 
-    public function insertUser($email, $password): bool
+    public function insertComment($author, $content): bool
     {
         try {
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $this->db->prepare('INSERT INTO user (email, password) VALUES (:email, :password)');
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':password', $hashedPassword);
+            $stmt = $this->db->prepare('INSERT INTO comment (author, content, creation_date) VALUES (:author, :content, NOW())');
+            $stmt->bindParam(':author', $author);
+            $stmt->bindParam(':content', $content);
             return $stmt->execute();
         } catch (PDOException $e) {
-            error_log('Erreur lors de l\'insertion d\'un utilisateur : ' . $e->getMessage());
+            error_log('Erreur lors de l\'insertion du commentaire : ' . $e->getMessage());
             return false;
         }
     }
 
-    public function modifyUser($email, $password): bool
+    public function modifyComment($author, $content): bool
     {
         try {
-            $stmt = $this->db->prepare('UPDATE user SET email = :email, password = :password WHERE id = :userId');
+            $stmt = $this->db->prepare('UPDATE user SET author = :author, content = :content WHERE id = :commentId');
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $password);
             return $stmt->execute();
@@ -41,11 +40,11 @@ class Connection
         }
     }
 
-    public function deleteUser($userId): bool
+    public function deleteComment($commentId): bool
     {
         try {
-            $stmt = $this->db->prepare('DELETE FROM user WHERE id = :userId');
-            $stmt->bindParam(':userId', $userId);
+            $stmt = $this->db->prepare('DELETE FROM user WHERE id = :commentId');
+            $stmt->bindParam(':userId', $commentId);
             return $stmt->execute();
         } catch (PDOException $e) {
             error_log('Erreur lors de la suppression de l\'utilisateur: ' . $e->getMessage());
