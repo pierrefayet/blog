@@ -32,7 +32,6 @@ class Router
             $actionName = $this->routes[$controllerName][$page] ?? null;
             if ($actionName !== null) {
                 $controllerClassName = "App\\Controller\\{$controllerName}";
-                var_dump('controllerClassName:', $controllerClassName);
                 if (class_exists($controllerClassName)) {
                     $model = new Post($this->pdo);
                     $controller = new $controllerClassName($model);
