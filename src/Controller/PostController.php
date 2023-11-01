@@ -56,37 +56,4 @@ class PostController
         }
         return $template->render();
     }
-
-    public function index(): string
-    {
-        $posts = $this->postModel->getAllPosts();
-
-        $loader = new FilesystemLoader('templates/');
-        $twig = new Environment($loader);
-
-        $template = $twig->load('listing.twig');
-        return $template->render([
-            'posts' => $posts,
-        ]);
-    }
-
-    public function home(): string
-    {
-
-        $loader = new FilesystemLoader('templates/');
-        $twig = new Environment($loader);
-
-        $template = $twig->load('homePage.twig');
-        return $template->render();
-    }
-
-    public function about(): string
-    {
-
-        $loader = new FilesystemLoader('templates/');
-        $twig = new Environment($loader);
-
-        $template = $twig->load('about.twig');
-        return $template->render();
-    }
 }

@@ -1,11 +1,19 @@
 <?php
 
 return [
-    'post' => [
-        'post' => 'post',
+    'PostController' => [
         'add' => 'add',
-        'index' => 'index',
+    ],
+    'HomeController' => [
         'home' => 'home',
+    ],
+    'ListingController' => [
+        'index' => 'index',
+    ],
+    'AboutController' => [
         'about' => 'about',
+    ],
+    'HomeConnectController' => [
+        'connect' => 'connect',
     ],
 ];

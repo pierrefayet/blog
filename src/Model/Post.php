@@ -56,11 +56,11 @@ class Post
     public function delete(): bool
     {
         try {
-        $db = 'DELETE FROM posts WHERE id = :postId';
-        $stmt = $this->db->query($db);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = $this->db->prepare('DELETE FROM posts WHERE id = :postId');
+            $stmt->bindParam(':postId', $postId);
+            return $stmt->execute();
         } catch (PDOException $e) {
-            error_log('Erreur lors de la suppretion du post : ' . $e->getMessage());
+            error_log('Erreur lors de la suppression du post : ' . $e->getMessage());
             return false;
         }
     }

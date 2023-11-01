@@ -8,21 +8,19 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
-class PageController
+class HomeConnectController
 {
     /**
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws LoaderError
      */
-    public function displayPage(string $page): string
+    public function connect(): string
     {
         $loader = new FilesystemLoader('templates/');
         $twig = new Environment($loader);
 
-        $template = $twig->load(sprintf('%s.twig', $page));
+        $template = $twig->load('homepageConnect.twig');
         return $template->render();
     }
 }
-
-

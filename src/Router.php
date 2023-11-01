@@ -25,19 +25,26 @@ class Router
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function routeRequest(string $page, string $controller): string
+    public function routeRequest(string $page, string $controllerName): string
     {
-        if (isset($this->routes[$controller][$page])) {
-            var_dump($this->routes[$controller][$page]);
-            if ($controller === 'post') {
-                $model = new Post($this->pdo);
-                $controller = new PostController($model);
-                $action = $this->routes['post'][$page];
-                return $controller->$action();
+        var_dump('$page:',$page,'$controllerName:',  $controllerName);
+        if (isset($this->routes[$controllerName])) {
+            $actionName = $this->routes[$controllerName][$page] ?? null;
+            if ($actionName !== null) {
+                $controllerClassName = "App\\Controller\\{$controllerName}";
+                var_dump('controllerClassName:', $controllerClassName);
+                if (class_exists($controllerClassName)) {
+                    $model = new Post($this->pdo);
+                    $controller = new $controllerClassName($model);
+                    if (method_exists($controller, $actionName)) {
+                        return $controller->$actionName();
+                    }
+                }
             }
         }
 
-        // Je gére le cas où la route n'existe pas
-        return 'echo Page non trouvée';
+        // Si aucune correspondance n'est trouvée, retournez une réponse 404
+        http_response_code(404);
+        return 'Page non trouvée';
     }
 }

@@ -8,19 +8,22 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
-class HomeController
+class AboutController
 {
+    public function __construct() {
+
+    }
     /**
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws LoaderError
      */
-    public function home(): string
+    public function about(): string
     {
         $loader = new FilesystemLoader('templates/');
         $twig = new Environment($loader);
 
-        $template = $twig->load('homePage.twig');
+        $template = $twig->load('about.twig');
         return $template->render();
     }
 }
