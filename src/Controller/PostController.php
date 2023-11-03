@@ -7,18 +7,17 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use Twig\Loader\FilesystemLoader;
 
 class PostController
 {
     private Post $postModel; // On injecte le modèle
-    private ?string $errorMessage = null;
-    private ?string $successMessage = null;
+    private Environment $twig;
 
 
-    public function __construct(Post $postModel)
+    public function __construct(Post $postModel, Environment $twig)
     {
         $this->postModel = $postModel; // on injecte le modèle dans le constructeur;
+        $this->twig = $twig;
     }
 
     /**
@@ -28,11 +27,6 @@ class PostController
      */
     public function add(): string
     {
-        $loader = new FilesystemLoader('templates/');
-        $twig = new Environment($loader);
-
-        $template = $twig->load('post.twig');
-
         // Je soumet le formulaire pour ajouter un post ici
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['title']) && isset($_POST['content'])) {
@@ -49,9 +43,9 @@ class PostController
             }
             // J'affiche le formulaire d'ajout de post
 
-            return $template->render($params);
+            return $this->twig->load('post/post.twig')->render($params);
         }
 
-        return $template->render();
+        return $this->twig->load('post/post.twig')->render();
     }
 }

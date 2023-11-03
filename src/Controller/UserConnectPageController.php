@@ -7,17 +7,16 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use Twig\Loader\FilesystemLoader;
 
-class HomeConnectController
+class UserConnectPageController
 {
     private Connection $connectionUser;
-    private ?string $errorMessage = null;
-    private ?string $successMessage = null;
+    private Environment $twig;
 
-    public function __construct(Connection $connectionUser)
+    public function __construct(Connection $connectionUser,Environment $twig)
     {
         $this->connectionUser = $connectionUser;
+        $this->twig = $twig;
     }
 
     /**
@@ -27,9 +26,8 @@ class HomeConnectController
      */
     public function connect(): string
     {
-        $loader = new FilesystemLoader('templates/');
-        $twig = new Environment($loader);
-        $template = $twig->load('pageConnect.twig');
+
+        $template = $this->twig->load('security/pageConnect.twig');
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -38,40 +36,6 @@ class HomeConnectController
             }
 
             $resultSqlUser = $this->connectionUser->insertUser($email, $password);
-            $params = [];
-            if ($resultSqlUser) {
-                $params ['successMessage'] = 'L\'utilisateur a été ajouté avec succès.';
-            } else {
-                $params ['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'utilisateur.';
-            }
-
-            return $template->render($params);
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['email']) && isset($_POST['password'])) {
-                $email = $_POST['email'];
-                $password = $_POST['password'];
-            }
-
-            $resultSqlUser = $this->connectionUser->modifyUser($email, $password);
-            $params = [];
-            if ($resultSqlUser) {
-                $params ['successMessage'] = 'L\'utilisateur a été ajouté avec succès.';
-            } else {
-                $params ['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'utilisateur.';
-            }
-
-            return $template->render($params);
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['email']) && isset($_POST['password'])) {
-                $email = $_POST['email'];
-                $password = $_POST['password'];
-            }
-
-            $resultSqlUser = $this->connectionUser->deleteUser($userId);
             $params = [];
             if ($resultSqlUser) {
                 $params ['successMessage'] = 'L\'utilisateur a été ajouté avec succès.';

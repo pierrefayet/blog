@@ -7,15 +7,16 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use Twig\Loader\FilesystemLoader;
 
 class HomePageController
 {
     private Post $postModel;
+    private Environment $twig;
 
-    public function __construct(Post $postModel)
+    public function __construct(Post $postModel, Environment $twig)
     {
         $this->postModel = $postModel;
+        $this->twig = $twig;
     }
     /**
      * @throws RuntimeError
@@ -24,13 +25,6 @@ class HomePageController
      */
     public function home(): string
     {
-        $posts = $this->postModel->getNewPosts();
-        $loader = new FilesystemLoader('templates/');
-        $twig = new Environment($loader);
-
-        $template = $twig->load('homePage.twig');
-        return $template->render([
-            'posts' => $posts,
-        ]);
+        return $this->twig->load('homePage.twig')->render(['posts' => $this->postModel->getNewPosts()]);
     }
 }

@@ -13,7 +13,10 @@ return [
     'AboutController' => [
         'about' => 'about',
     ],
-    'HomeConnectController' => [
+    'UserConnectPageController' => [
         'connect' => 'connect',
+    ],
+    'ShowPostController' => [
+        'show' => 'show',
     ],
 ];

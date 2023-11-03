@@ -5,19 +5,24 @@ namespace App;
 use App\Controller\PostController;
 use App\Model\Post;
 use PDO;
+use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Twig\Loader\FilesystemLoader;
 
 class Router
 {
     private array $routes;
     private PDO $pdo;
 
-    public function __construct(array $routes, PDO $pdo)
+    private Environment $twig;
+
+    public function __construct(array $routes, PDO $pdo, Environment $twig )
     {
         $this->routes = $routes;
         $this->pdo = $pdo;
+        $this->twig = $twig ;
     }
 
     /**
@@ -25,7 +30,7 @@ class Router
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function routeRequest(string $page, string $controllerName): string
+    public function routeRequest(string $page, string $controllerName, Environment $twig): string
     {
         if (isset($this->routes[$controllerName])) {
             $actionName = $this->routes[$controllerName][$page] ?? null;
@@ -33,7 +38,7 @@ class Router
                 $controllerClassName = "App\\Controller\\{$controllerName}";
                 if (class_exists($controllerClassName)) {
                     $model = new Post($this->pdo);
-                    $controller = new $controllerClassName($model);
+                    $controller = new $controllerClassName($model, $twig);
                     if (method_exists($controller, $actionName)) {
                         return $controller->$actionName();
                     }

@@ -30,7 +30,7 @@ class Post
     public function modifyPost($title, $content, $postId): bool
     {
         try {
-            $stmt = $this->db->prepare('UPDATE posts SET title = :title, content = :content, creation_date = NOW() WHERE id = :postId');
+            $stmt = $this->db->prepare('UPDATE posts SET title = :title, content = :content, creation_date = NOW() WHERE post_id = :postId');
             $stmt->bindParam(':title', $title);
             $stmt->bindParam(':content', $content);
             $stmt->bindParam(':postId', $postId);
@@ -53,10 +53,23 @@ class Post
         }
     }
 
+    public function getSinglePost($postId): array
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM posts WHERE post_id = :post_id");
+            $stmt->bindParam(':post_id', $postId);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log('Erreur lors de la récupération du post : ' . $e->getMessage());
+            return [];
+        }
+    }
+
     public function getNewPosts(): array
     {
         try {
-            $db = "SELECT * FROM posts";
+            $db = "SELECT * FROM posts ORDER BY creation_date DESC LIMIT 2";
             $stmt = $this->db->query($db);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {

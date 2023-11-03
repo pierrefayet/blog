@@ -7,15 +7,17 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use Twig\Loader\FilesystemLoader;
 
 class ListingController
 {
     private Post $postModel;
+    private Environment $twig;
 
-    public function __construct(Post $postModel)
+
+    public function __construct(Post $postModel, Environment $twig)
     {
         $this->postModel = $postModel;
+        $this->twig = $twig;
     }
 
     /**
@@ -25,13 +27,6 @@ class ListingController
      */
     public function index(): string
     {
-        $posts = $this->postModel->getAllPosts();
-        $loader = new FilesystemLoader('templates/');
-        $twig = new Environment($loader);
-
-        $template = $twig->load('listing.twig');
-        return $template->render([
-            'posts' => $posts,
-        ]);
+        return $this->twig->load('post/listing.twig')->render(['posts' => $this->postModel->getAllPosts()]);
     }
 }

@@ -2,28 +2,28 @@
 
 namespace App\Controller;
 
+use App\Model\Post;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use Twig\Loader\FilesystemLoader;
 
 class AboutController
 {
-    public function __construct() {
-
+    private Environment $twig;
+    private Post $postModel;
+    public function __construct(Post $postModel,Environment $twig) {
+        $this->twig = $twig;
     }
+
+
     /**
-     * @throws RuntimeError
      * @throws SyntaxError
+     * @throws RuntimeError
      * @throws LoaderError
      */
     public function about(): string
     {
-        $loader = new FilesystemLoader('templates/');
-        $twig = new Environment($loader);
-
-        $template = $twig->load('about.twig');
-        return $template->render();
+        return $this->twig->load('about.twig')->render();
     }
 }

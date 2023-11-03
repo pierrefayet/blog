@@ -8,7 +8,6 @@ use PDOException;
 class Connection
 {
     private PDO $db;
-
     public function __construct(PDO $db)
     {
         $this->db = $db;
@@ -55,8 +54,8 @@ class Connection
 
     public function verifyUser($email, $password): bool
     {
-        $stmt = $this->db->prepare('SELECT password FROM user WHERE email = :email');
-        $stmt->bindParam(':email', $email);
+        $stmt = $this->db->prepare('SELECT password FROM user WHERE user_status_id = :status');
+        $stmt->bindParam(':status', $status);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
