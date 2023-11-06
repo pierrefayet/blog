@@ -8,7 +8,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class UserConnectPageController
+class UserRegistrationController
 {
     private Connection $connectionUser;
     private Environment $twig;
@@ -24,7 +24,7 @@ class UserConnectPageController
      * @throws SyntaxError
      * @throws LoaderError
      */
-    public function connect(): string
+    public function addUser(): string
     {
 
         $template = $this->twig->load('security/pageConnect.twig');

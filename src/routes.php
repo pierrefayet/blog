@@ -13,9 +13,6 @@ return [
     'AboutController' => [
         'about' => 'about',
     ],
-    'UserConnectPageController' => [
-        'connect' => 'connect',
-    ],
     'ShowPostController' => [
         'show' => 'show',
     ],

@@ -51,19 +51,4 @@ class Comment
             return false;
         }
     }
-
-    public function verifyUser($email, $password): bool
-    {
-        $stmt = $this->db->prepare('SELECT password FROM user WHERE email = :email');
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($row && password_verify($password, $row['password'])) {
-
-            return true;
-        }
-
-        return false;
-    }
 }

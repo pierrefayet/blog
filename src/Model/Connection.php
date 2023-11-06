@@ -52,15 +52,27 @@ class Connection
         }
     }
 
-    public function verifyUser($email, $password): bool
+    public function checkUser($email, $password): bool
     {
-        $stmt = $this->db->prepare('SELECT password FROM user WHERE user_status_id = :status');
-        $stmt->bindParam(':status', $status);
+        $stmt = $this->db->prepare('SELECT password FROM user WHERE email = :email');
+        $stmt->bindParam(':email', $email);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row && password_verify($password, $row['password'])) {
+            return true;
+        }
 
+        return false;
+    }
+    public function checkStatusUser($email, $password): bool
+    {
+        $stmt = $this->db->prepare('SELECT user_status_id FROM user WHERE email = :email');
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row && password_verify($password, $row['password'])) {
             return true;
         }
 
