@@ -8,10 +8,12 @@ use PDOException;
 class Comment
 {
     private PDO $db;
+    private User $resultUsers;
 
-    public function __construct(PDO $db)
+    public function __construct(PDO $db, User $resultUsers)
     {
         $this->db = $db;
+        $this->resultUsers = $resultUsers;
     }
 
     public function insertComment($author, $content): bool

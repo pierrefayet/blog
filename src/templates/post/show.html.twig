@@ -1,17 +1,37 @@
 {% extends 'layout/layout.twig' %}
-
 {% block content %}
     <div class="container">
         <h2 class="mt-5">Bonne lecture!</h2>
-        <div class="row mt-4">
+        <form method="POST" action="index.php?method=getNewPosts&controller=PostController&{{ postId.title }}">
+            <div class="row mt-4">
                 <div class="col-md-6 mb-4">
                     <div class="card custom-card">
                         <div class="card-body">
-                            <h2 class="card-title text-black-50">{{ postId.title }}</h2>
+                            <h3 class="card-title text-black-50">{{ postId.title }}</h3>
                             <p class="card-text text-black-50">{{ postId.content }}</p>
+                            <a href="index.php?method=modifyPost&controller=PostController&{{ postId.title }}" type="submit" class="btn btn-primary">Modifier</a>
+                            <a href="index.php?method=deletePost&controller=PostController&{{ postId.title }}" type="submit" class="btn btn-outline-danger mb">Supprimer</a>
                         </div>
                     </div>
                 </div>
-        </div>
+            </div>
+        </form>
     </div>
+
+    <style>
+        h2, h3 {
+            color: #333;
+        }
+        .custom-card {
+            background-color: #9AC8EB;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .custom-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 {% endblock %}

@@ -12,10 +12,9 @@ class User
     public function __construct(PDO $db)
     {
         $this->db = $db;
-
     }
 
-    public function hasPermission(): array
+    public function getStatus(): array
     {
         try {
             $stmt = $this->db->prepare("SELECT * FROM users WHERE user_status_id = :role");

@@ -2,7 +2,13 @@
 
 return [
     'PostController' => [
-        'add' => 'add',
+        'addPost' => 'addPost',
+        'insertPost' => 'insertPost',
+        'modifyPost' => 'modifyPost',
+        'getAllPosts' => 'getAllPosts',
+        'getSinglePost' => 'getSinglePost',
+        'getNewPosts' => 'getNewPosts',
+        'deletePost' => 'deletePost',
     ],
     'HomePageController' => [
         'home' => 'home',
@@ -15,5 +21,17 @@ return [
     ],
     'ShowPostController' => [
         'show' => 'show',
+    ],
+    'UserRegistrationController' => [
+        'addUser' => 'addUser'
+    ],
+    'UserLoginController' => [
+        'loginUser' => 'loginUser'
+    ],
+    'CommentController' => [
+        'checkStatusForConnect' => 'checkStatusForConnect',
+        'insertComment' => 'insertComment',
+        'modifyComment' => 'modifyComment',
+        'deleteComment' => 'deleteComment',
     ],
 ];

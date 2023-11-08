@@ -2,29 +2,32 @@
 
 namespace App\Controller;
 
-use App\Model\User;
+use App\Model\Comment;
 use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+
 
 class CommentController
 {
-    private User $resultUsers;
+    private Environment $twig;
+    private Comment $comment;
 
-    public function __construct(User $resultUsers)
+
+    public function __construct(Comment $comment, Environment $twig)
     {
-        $this->resultUsers = $resultUsers;
+        $this->comment = $comment;
+        $this->twig = $twig;
     }
 
-    public function checkStatusForConnect()
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
+    public function index(): string
     {
-        $loader = new FilesystemLoader('templates/');
-        $twig = new Environment($loader);
-        $template = $twig->load('security/connect.twig');
-        foreach ($resultUsers as $resultUser) {
-            if ($resultUser) {
-                $resultUser['status'] = 'Admin';
-            }
-        }
-
+        return $this->twig->load('commentPage/listing.twig')->render();
     }
 }

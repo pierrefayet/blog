@@ -27,7 +27,7 @@ class UserRegistrationController
     public function addUser(): string
     {
 
-        $template = $this->twig->load('security/pageConnect.twig');
+        $template = $this->twig->load('security/registrationUserPage.twig')->render();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -46,6 +46,6 @@ class UserRegistrationController
             return $template->render($params);
         }
 
-        return $template->render();
+        return $template;
     }
 }

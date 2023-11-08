@@ -1,0 +1,19 @@
+{% extends 'layout/layout.twig' %}
+
+{% block content %}
+    <h1>Connectez-vous Pour pouvoir laisser un commentaire</h1>
+    <div class="container">
+        <form method="POST" action="index.php?method=loginUser&controller=UserloginController" >
+            <div class="form-group">
+                <label for="title">Email</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Mot de passe</label>
+                <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Connection</button>
+        </form>
+    </div>
+{% endblock content

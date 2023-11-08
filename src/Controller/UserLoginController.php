@@ -27,7 +27,7 @@ class UserLoginController
     public function loginUser(): string
     {
 
-        $template = $this->twig->load('security/pageConnect.twig');
+        $template = $this->twig->load('security/loginUserPage.twig');
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['email']) && isset($_POST['password'])) {
