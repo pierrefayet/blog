@@ -25,7 +25,7 @@ return [
     'UserRegistrationController' => [
         'addUser' => 'addUser'
     ],
-    'UserLoginController' => [
+    'UserController' => [
         'loginUser' => 'loginUser'
     ],
     'CommentController' => [

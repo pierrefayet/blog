@@ -30,7 +30,7 @@ class Post
     public function modifyPost($title, $content, $postId): bool
     {
         try {
-            $stmt = $this->db->prepare('UPDATE posts SET title = :title, content = :content, creation_date = NOW() WHERE post_id = :postId');
+            $stmt = $this->db->prepare('UPDATE posts SET title = :title, content = :content, creation_date = NOW() WHERE id = :postId');
             $stmt->bindParam(':title', $title);
             $stmt->bindParam(':content', $content);
             $stmt->bindParam(':postId', $postId);
@@ -56,7 +56,7 @@ class Post
     public function getSinglePost($postId): array
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM posts WHERE post_id = :post_id");
+            $stmt = $this->db->prepare("SELECT * FROM posts WHERE id = :post_id");
             $stmt->bindParam(':post_id', $postId);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);

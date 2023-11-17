@@ -8,12 +8,10 @@ use PDOException;
 class Comment
 {
     private PDO $db;
-    private User $resultUsers;
 
-    public function __construct(PDO $db, User $resultUsers)
+    public function __construct(PDO $db)
     {
         $this->db = $db;
-        $this->resultUsers = $resultUsers;
     }
 
     public function insertComment($author, $content): bool
@@ -32,7 +30,7 @@ class Comment
     public function modifyComment($author, $content): bool
     {
         try {
-            $stmt = $this->db->prepare('UPDATE user SET author = :author, content = :content WHERE id = :commentId');
+            $stmt = $this->db->prepare('UPDATE comment SET author = :author, content = :content WHERE id = :commentId');
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $password);
             return $stmt->execute();
@@ -45,8 +43,8 @@ class Comment
     public function deleteComment($commentId): bool
     {
         try {
-            $stmt = $this->db->prepare('DELETE FROM user WHERE id = :commentId');
-            $stmt->bindParam(':userId', $commentId);
+            $stmt = $this->db->prepare('DELETE FROM comment WHERE id = :commentId');
+            $stmt->bindParam(':commentId', $commentId);
             return $stmt->execute();
         } catch (PDOException $e) {
             error_log('Erreur lors de la suppression de l\'utilisateur: ' . $e->getMessage());
