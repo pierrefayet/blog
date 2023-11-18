@@ -59,11 +59,6 @@ class ControllerManager
             $controller = new ShowPostController($model, $this->twig);
         }
 
-        if ($requestedController === 'UserRegistrationController') {
-            $model = new User($this->pdo);
-            $controller = new UserRegistrationController($model, $this->twig);
-        }
-
         if ($requestedController === 'UserController') {
             $model = new User($this->pdo);
             $controller = new UserController($model, $this->twig);
