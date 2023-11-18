@@ -25,6 +25,8 @@ class HomePageController
      */
     public function home(): string
     {
+        session_start();
+
         return $this->twig->load('homePage.twig')->render(['posts' => $this->postModel->getNewPosts()]);
     }
 }

@@ -27,6 +27,7 @@ class UserController
      */
     public function register(): string
     {
+        session_start();
         $template = $this->twig->load('security/registerUserPage.twig');
         $params = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -43,6 +44,7 @@ class UserController
                 $_SESSION['username'] = $username;
                 $_SESSION['email'] = $email;
                 $_SESSION['password'] = $password;
+                var_dump($_SESSION['logged']);
                 header('Location:http://localhost:8080/src/index.php?method=home&controller=HomePageController');
                 return $template->render($params);
             } else {
@@ -54,6 +56,7 @@ class UserController
 
     public function login(): string
     {
+
         $params = [];
         $template = $this->twig->load('security/loginUserPage.twig');
 
@@ -64,12 +67,14 @@ class UserController
                 $user = $this->model->checkUser($username, $password);
 
                 if ($user) {
+                    session_start();
                     $_SESSION['logged'] = true;
                     $_SESSION['username'] = $username;
                     $_SESSION['isConnected'] = true;
                     $params['successMessage'] = "Connexion réussie, bienvenue $username.";
+                    var_dump($_SESSION);
                     header('Location: http://localhost:8080/src/index.php?method=home&controller=HomePageController');
-                    var_dump($_SESSION['isConnected']);
+
                     return $template->render($params);
                 } else {
                     $params['errorMessage'] = 'Échec de connexion, veuillez réessayer.';
