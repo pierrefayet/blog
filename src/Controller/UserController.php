@@ -69,7 +69,8 @@ class UserController
                     $_SESSION['isConnected'] = true;
                     $params['successMessage'] = "Connexion réussie, bienvenue $username.";
                     header('Location: http://localhost:8080/src/index.php?method=home&controller=HomePageController');
-                    exit();
+                    var_dump($_SESSION['isConnected']);
+                    return $template->render($params);
                 } else {
                     $params['errorMessage'] = 'Échec de connexion, veuillez réessayer.';
                 }
@@ -83,10 +84,12 @@ class UserController
 
     public function logout(): string
     {
+        session_start();
+        $_SESSION['isConnected'] = false;
         session_unset();
         session_destroy();
-        $_SESSION['logout_message'] = 'Vous avez été déconnecté avec succès.';
+        var_dump($_SESSION['isConnected']);
         header('Location: http://localhost:8080/src/index.php?method=home&controller=HomePageController');
-        exit;
+        exit();
     }
 }
