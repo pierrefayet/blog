@@ -67,7 +67,6 @@ class UserController
                 $user = $this->model->checkUser($username, $password);
 
                 if ($user) {
-                    session_start();
                     $_SESSION['logged'] = true;
                     $_SESSION['username'] = $username;
                     $_SESSION['isConnected'] = true;
@@ -88,9 +87,8 @@ class UserController
 
     public function logout(): string
     {
-        session_start();
         $_SESSION['isConnected'] = false;
-        session_unset();
+        $_SESSION = [];
         session_destroy();
         header('Location: http://localhost:8080/src/index.php?method=home&controller=HomePageController');
         exit();

@@ -25,9 +25,9 @@ class ShowPostController
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function show(): string
+    public function show(): void
     {
         $postId = $_GET['postId'];
-        return $this->twig->load('post/show.html.twig')->render(['postId' => $this->postModel->getSinglePost($postId)]);
+         var_dump($this->twig->load('post/show.html.twig')->render(['postId' => $this->postModel->getSinglePost($postId)]));
     }
 }

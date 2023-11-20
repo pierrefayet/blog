@@ -59,7 +59,9 @@ class Post
             $stmt = $this->db->prepare("SELECT * FROM posts WHERE id = :post_id");
             $stmt->bindParam(':post_id', $postId);
             $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            var_dump($postId);
+            return [$result];
         } catch (PDOException $e) {
             error_log('Erreur lors de la récupération du post : ' . $e->getMessage());
             return [];
@@ -71,7 +73,8 @@ class Post
         try {
             $db = "SELECT * FROM posts ORDER BY creation_date DESC LIMIT 2";
             $stmt = $this->db->query($db);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $result =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return [$result];
         } catch (PDOException $e) {
             error_log('Erreur lors de la récupération des posts : ' . $e->getMessage());
             return [];

@@ -41,28 +41,6 @@ class PostController
             } else {
                 $params ['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'article.';
             }
-            // J'affiche le formulaire d'ajout de post
-        }
-        return $this->twig->load('post/post.twig')->render($params);
-    }
-
-    public function modifyPost(): string
-    {
-        // Je soumet le formulaire pour ajouter un post ici
-        var_dump($_POST['title']);
-        var_dump($_POST['content']);
-        if (isset($_POST['title']) && isset($_POST['content'])) {
-            $title = $_POST['title'];
-            $content = $_POST['content'];
-        }
-        // J'utilise le modèle pour ajouter le post
-        $result = $this->model->modifyPost($title, $content);
-        var_dump($result);
-        $params = [];
-        if ($result) {
-            $params ['successMessage'] = 'L\'article a été ajouté avec succès.';
-        } else {
-            $params ['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'article.';
         }
         // J'affiche le formulaire d'ajout de post
         return $this->twig->load('post/post.twig')->render($params);
@@ -70,36 +48,15 @@ class PostController
 
     public function deletePost(): string
     {
+        $params = [];
         // Je soumet le formulaire pour ajouter un post ici
-        var_dump($_POST['title']);
-        var_dump($_POST['content']);
         if (isset($_POST['title']) && isset($_POST['content'])) {
             $title = $_POST['title'];
             $content = $_POST['content'];
         }
         // J'utilise le modèle pour ajouter le post
-        $result = $this->model->deletePost($title, $content);
-        var_dump($result);
-        $params = [];
-        if ($result) {
-            $params ['successMessage'] = 'L\'article a été ajouté avec succès.';
-        } else {
-            $params ['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'article.';
-        }
-        // J'affiche le formulaire d'ajout de post
-        return $this->twig->load('post/post.twig')->render($params);
-    }
+        $result = $this->model->deletePost($title, $content);;
 
-    public function edit(): string
-    {
-        // Je soumet le formulaire pour ajouter un post ici
-        if (isset($_POST['title']) && isset($_POST['content'])) {
-            $title = $_POST['title'];
-            $content = $_POST['content'];
-        }
-        // J'utilise le modèle pour ajouter le post
-        $result = $this->model->edit($title, $content);
-        $params = [];
         if ($result) {
             $params ['successMessage'] = 'L\'article a été ajouté avec succès.';
         } else {

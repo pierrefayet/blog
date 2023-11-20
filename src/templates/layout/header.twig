@@ -19,12 +19,12 @@
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                                             href="index.php?method=about&controller=AboutController">A propôs de moi</a>
                     </li>
-                    {% if session['isConnected'] %}
+                    {% if session['isConnected'] is defined and session['isConnected'] %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href=index.php?method=logout&controller=UserController>Déconnexion</a>
                         </li>
                     {% else %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                                                href="index.php?method=login&controller=UserController">Connection</a>
+                                                href="index.php?method=login&controller=UserController">Connexion</a>
                         </li>
                     {% endif %}
                 </ul>

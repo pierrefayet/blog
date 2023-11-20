@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container">
         <h2 class="mt-5">Modifier l'article</h2>
-        <form method="POST" action="index.php?method=modifyPost&controller=PostController&{{ posts.id }}">
+        <form method="POST" action="index.php?method=update&controller=UpdatePostController&{{ posts.id }}">
             <div class="form-group">
                 <label for="title">Titre de l'article :</label>
                 <textarea class="form-control" id="title" name="title">{{ posts.titre }}</textarea>

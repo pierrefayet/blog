@@ -4,6 +4,7 @@ use App\config\DbConnect;
 use App\Manager\ControllerManager;
 use Tracy\Debugger;
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 require_once '../vendor/autoload.php';
@@ -12,7 +13,8 @@ $dbConnect = new DbConnect('localhost', 'blog', 'nareendel', 'Aa19071985.');
 $pdo = $dbConnect->getDb();
 
 $loader = new FilesystemLoader('templates/');
-$twig = new Environment($loader);
+$twig = new Environment($loader, ['debug' => true, 'strict_variables' => true]);
+$twig->addExtension(new DebugExtension());
 session_start();
 $maxInactiveTime = 1800;
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $maxInactiveTime)) {

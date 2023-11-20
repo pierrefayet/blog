@@ -25,11 +25,26 @@ class UpdatePostController
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function show(): string
+    public function update(): string
     {
-        $postId = $_POST['postId'];
-        $title = $_POST['title'];
-        $content = $_POST['content'];
+        $params = [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Récupérez les données du formulaire
+            $postId = $_POST['postId'];
+            $title = $_POST['title'];
+            $content = $_POST['content'];
+
+            // Utilisez le modèle pour mettre à jour le post
+            $result = $this->postModel->modifyPost($postId, $title, $content);
+            var_dump($result);
+
+            if ($result) {
+                $params ['successMessage'] = 'L\'article a été mis à jour avec succès.';
+            } else {
+                $params ['errorMessage'] = 'Une erreur est survenue lors de la mise à jour de l\'article.';
+            }
+        }
 
         return $this->twig->load('post/updatePost.twig')->render(context: ['postId' => $this->postModel->modifyPost($postId, $title, $content)]);
     }

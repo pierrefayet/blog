@@ -8,6 +8,7 @@ use App\Controller\HomePageController;
 use App\Controller\ListingController;
 use App\Controller\PostController;
 use App\Controller\ShowPostController;
+use App\Controller\UpdatePostController;
 use App\Controller\UserController;
 use App\Controller\UserRegistrationController;
 use App\Model\Comment;
@@ -67,6 +68,11 @@ class ControllerManager
         if ($requestedController === 'CommentController') {
             $model = new Comment($this->pdo);
             $controller = new CommentController($model, $this->twig);
+        }
+
+        if ($requestedController === 'UpdatePostController') {
+            $model = new Post($this->pdo);
+            $controller = new UpdatePostController($model, $this->twig);
         }
 
         return $controller;
