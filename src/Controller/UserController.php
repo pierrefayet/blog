@@ -72,7 +72,6 @@ class UserController
                     $_SESSION['username'] = $username;
                     $_SESSION['isConnected'] = true;
                     $params['successMessage'] = "Connexion réussie, bienvenue $username.";
-                    var_dump($_SESSION);
                     header('Location: http://localhost:8080/src/index.php?method=home&controller=HomePageController');
 
                     return $template->render($params);
@@ -93,7 +92,6 @@ class UserController
         $_SESSION['isConnected'] = false;
         session_unset();
         session_destroy();
-        var_dump($_SESSION['isConnected']);
         header('Location: http://localhost:8080/src/index.php?method=home&controller=HomePageController');
         exit();
     }
