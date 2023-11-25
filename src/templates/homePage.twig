@@ -8,13 +8,13 @@
     <h2 class="mt-5">Bienvenue dans mon blog sur l'univers php</h2>
     <h3>Dernière actualité:</h3>
     <div class="row mt-4">
-        {% for post in posts %}
+        {% for posts in post %}
             <div class="col-md-6 mb-4">
                 <div class="card custom-card">
                     <div class="card-body">
-                       <a href="index.php?method=show&controller=ShowPostController&postId={{ posts.id }}"><h2 class="card-title text-black-50">{{ posts.title }}</h2></a>
-                        <a href="index.php?method=show&controller=ShowPostController&postId={{ posts.id }}"><p class="card-text text-black-50">{{ posts.content }}</p></a>
-                        <a href="index.php?method=show&controller=ShowPostController&postId={{ posts.id }}">Afficher plus...</a>
+                       <a href="index.php?method=show&controller=PostController&postId={{ posts.id }}"><h2 class="card-title text-black-50">{{ posts.title }}</h2></a>
+                        <a href="index.php?method=show&controller=PostController&postId={{ posts.id }}"><p class="card-text text-black-50">{{ posts.content }}</p></a>
+                        <a href="index.php?method=show&controller=PostController&postId={{ posts.id }}">Afficher plus...</a>
                     </div>
                 </div>
             </div>

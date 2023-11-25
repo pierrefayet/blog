@@ -7,7 +7,6 @@ use App\Controller\CommentController;
 use App\Controller\HomePageController;
 use App\Controller\ListingController;
 use App\Controller\PostController;
-use App\Controller\ShowPostController;
 use App\Controller\UpdatePostController;
 use App\Controller\UserController;
 use App\Controller\UserRegistrationController;
@@ -34,12 +33,6 @@ class ControllerManager
 
     public function route($requestedController): object
     {
-
-        if ($requestedController === 'PostController') {
-            $model = new Post($this->pdo);
-            $controller = new PostController($model, $this->twig);
-        }
-
         if ($requestedController === 'HomePageController') {
             $model = new Post($this->pdo);
             $controller = new HomePageController($model, $this->twig);
@@ -55,9 +48,9 @@ class ControllerManager
             $controller = new ListingController($model, $this->twig);
         }
 
-        if ($requestedController === 'ShowPostController') {
+        if ($requestedController === 'PostController') {
             $model = new Post($this->pdo);
-            $controller = new ShowPostController($model, $this->twig);
+            $controller = new PostController($model, $this->twig);
         }
 
         if ($requestedController === 'UserController') {
@@ -68,11 +61,6 @@ class ControllerManager
         if ($requestedController === 'CommentController') {
             $model = new Comment($this->pdo);
             $controller = new CommentController($model, $this->twig);
-        }
-
-        if ($requestedController === 'UpdatePostController') {
-            $model = new Post($this->pdo);
-            $controller = new UpdatePostController($model, $this->twig);
         }
 
         return $controller;

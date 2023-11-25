@@ -27,7 +27,7 @@ class UserController
      */
     public function register(): string
     {
-        session_start();
+
         $template = $this->twig->load('security/registerUserPage.twig');
         $params = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -43,9 +43,11 @@ class UserController
                 $_SESSION['logged'] = true;
                 $_SESSION['username'] = $username;
                 $_SESSION['email'] = $email;
+                $_SESSION['userId'] = $this->model->db->lastInsertId();
                 $_SESSION['password'] = $password;
-                var_dump($_SESSION['logged']);
+                $_SESSION['password'] = $password;
                 header('Location:http://localhost:8080/src/index.php?method=home&controller=HomePageController');
+
                 return $template->render($params);
             } else {
                 $params ['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'utilisateur.';
@@ -56,21 +58,23 @@ class UserController
 
     public function login(): string
     {
-
         $params = [];
         $template = $this->twig->load('security/loginUserPage.twig');
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
             if (isset($_POST['username']) && isset($_POST['password'])) {
                 $username = $_POST['username'];
-                $password = $_POST['password'];
-                $user = $this->model->checkUser($username, $password);
-
+                $password = '';
+                $userId = '';
+                $user = $this->model->checkUser($username, $password, $userId);
+                var_dump($user);
                 if ($user) {
+                    var_dump('la');
                     $_SESSION['logged'] = true;
                     $_SESSION['username'] = $username;
                     $_SESSION['isConnected'] = true;
+                    $_SESSION['userId'] = $userId;
                     $params['successMessage'] = "Connexion réussie, bienvenue $username.";
+                    var_dump($_SESSION);
                     header('Location: http://localhost:8080/src/index.php?method=home&controller=HomePageController');
 
                     return $template->render($params);

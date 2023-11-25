@@ -1,0 +1,20 @@
+{% extends 'layout/layout.twig' %}
+{% block content %}
+    <div class="container">
+        <h2 class="mt-5">Modifier le commentaire</h2>
+        <form method="POST" action="index.php?method=update&controller=commentController&commentId={{ comment.id }}">
+            <div class="form-group">
+                <label for="content">Contenu du commentaire :</label>
+                <textarea class="form-control" id="content" name="content">{{ comment.content }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+        </form>
+    </div>
+    {% if successMessage is defined %}
+        <p>{{ successMessage }}</p>
+    {% endif %}
+
+    {% if errorMessage is defined %}
+        <p>{{ errorMessage }}</p>
+    {% endif %}
+{% endblock %}

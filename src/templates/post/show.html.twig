@@ -2,26 +2,32 @@
 {% block content %}
     <div class="container">
         <h2 class="mt-5">Bonne lecture!</h2>
-        <form method="POST" action="index.php?method=getNewPosts&controller=PostController&{{ postId.id}}">
-            <div class="row mt-4">
-                <div class="col-md-6 mb-4">
-                    <div class="card custom-card">
-                        <div class="card-body">
-                            <h3 class="card-title text-black-50">{{ postId }}</h3>
-                            <p class="card-text text-black-50">{{ postId }}</p>
-                            <a href="index.php?method=modifyPost&controller=UpdatePostController&{{ postId }}" type="submit" class="btn btn-primary">Modifier</a>
-                            <a href="index.php?method=deletePost&controller=UpdatePostController&{{ postId }}" type="submit" class="btn btn-outline-danger mb">Supprimer</a>
-                        </div>
+        <div class="row mt-4">
+            <div class="col-md-6 mb-4">
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <h3 class="card-title text-black-50">{{ post.title }}</h3>
+                        <p class="card-text text-black-50">{{ post.content }}</p>
+                        {% if session['isConnected'] is defined and session['isConnected'] %}
+                            <a href="index.php?method=update&controller=PostController&postId={{ post.id }}"
+                               type="submit" class="btn btn-primary">Modifier</a>
+                            <a href="index.php?method=deletePost&controller=PostController&postId={{ post.id }}"
+                               type="submit" class="btn btn-outline-danger mb">Supprimer</a>
+                        {% endif %}
+                        {% if session['isConnected'] is defined and session['isConnected'] %}
+                            <a href="index.php?method=addComment&controller=CommentController&postId={{ post.id }}"
+                               type="submit" class="btn btn-primary">Commenter</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-
     <style>
         h2, h3 {
             color: #333;
         }
+
         .custom-card {
             background-color: #9AC8EB;
             border: 1px solid #e0e0e0;
@@ -29,6 +35,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s, box-shadow 0.3s;
         }
+
         .custom-card:hover {
             transform: scale(1.02);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);

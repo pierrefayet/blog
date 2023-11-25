@@ -12,15 +12,18 @@
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                                             href="index.php?method=home&controller=HomePageController">Home</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                                            href="index.php?method=index&controller=ListingController">Listing</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                                            href="index.php?method=addPost&controller=PostController">Ajout d'un
-                            article</a></li>
+                                            href="index.php?method=index&controller=PostController">Listing</a></li>
+                    {% if session['isConnected'] is defined and session['isConnected'] %}
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                                                href="index.php?method=addPost&controller=PostController">Ajout d'un
+                                article</a></li>
+                    {% endif %}
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                                             href="index.php?method=about&controller=AboutController">A propôs de moi</a>
                     </li>
                     {% if session['isConnected'] is defined and session['isConnected'] %}
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href=index.php?method=logout&controller=UserController>Déconnexion</a>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                                                href=index.php?method=logout&controller=UserController>Déconnexion</a>
                         </li>
                     {% else %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"

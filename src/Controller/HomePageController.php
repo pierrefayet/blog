@@ -25,7 +25,7 @@ class HomePageController
      */
     public function home(): string
     {
-        $postId = $_GET['postId'];
-        return $this->twig->load('homePage.twig')->render(['$postId ' => $this->postModel->getNewPosts()]);
+        var_dump($_SESSION);
+        return $this->twig->load('homePage.twig')->render(['post' => $this->postModel->getNewPosts()]);
     }
 }

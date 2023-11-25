@@ -7,16 +7,16 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Twig\Loader\FilesystemLoader;
 
 class PostController
 {
-    private Post $model; // On injecte le modèle
+    private Post $postModel; // On injecte le modèle Post
     private Environment $twig;
 
-
-    public function __construct(Post $model, Environment $twig)
+    public function __construct(Post $postModel, Environment $twig)
     {
-        $this->model = $model; // on injecte le modèle dans le constructeur;
+        $this->postModel = $postModel; // on injecte le modèle  Post dans le constructeur;
         $this->twig = $twig;
     }
 
@@ -25,6 +25,17 @@ class PostController
      * @throws RuntimeError
      * @throws LoaderError
      */
+    public function show(): string
+    {
+        $postId = $_GET['postId'];
+         return($this->twig->load('post/show.html.twig')->render(['post' => $this->postModel->getSinglePost($postId)]));
+    }
+
+    public function index(): string
+    {
+        return $this->twig->load('post/listing.twig')->render(['posts' => $this->postModel->getAllPosts()]);
+    }
+
     public function addPost(): string
     {
         $params = [];
@@ -35,7 +46,8 @@ class PostController
                 $content = $_POST['content'];
             }
             // J'utilise le modèle pour ajouter le post
-            $result = $this->model->insertPost($title, $content);
+            $result = $this->postModel->insertPost($title, $content);
+            var_dump($result);
             if ($result) {
                 $params ['successMessage'] = 'L\'article a été ajouté avec succès.';
             } else {
@@ -46,23 +58,44 @@ class PostController
         return $this->twig->load('post/post.twig')->render($params);
     }
 
-    public function deletePost(): string
+    public function update(): string
     {
-        $params = [];
-        // Je soumet le formulaire pour ajouter un post ici
-        if (isset($_POST['title']) && isset($_POST['content'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            // Récupérez les données du formulaire
             $title = $_POST['title'];
             $content = $_POST['content'];
-        }
-        // J'utilise le modèle pour ajouter le post
-        $result = $this->model->deletePost($title, $content);;
+            $postId = $_GET['postId'];
 
-        if ($result) {
-            $params ['successMessage'] = 'L\'article a été ajouté avec succès.';
-        } else {
-            $params ['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'article.';
+
+            // Utilisez le modèle pour mettre à jour le post
+            $result = $this->postModel->modifyPost($title, $content, $postId);
+            if ($result) {
+                $params ['successMessage'] = 'L\'article a été mis à jour avec succès.';
+            } else {
+                $params ['errorMessage'] = 'Une erreur est survenue lors de la mise à jour de l\'article.';
+            }
         }
-        // J'affiche le formulaire d'ajout de post
-        return $this->twig->load('post/post.twig')->render($params);
+
+        $postId = $_GET['postId'];
+        return $this->twig->load('post/updatePost.twig')->render(['post' => $this->postModel->getSinglePost($postId), 'params' => $params]);
+    }
+
+    public function deletePost(): string
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $params = [];
+            $postId = $_GET['postId'];
+            var_dump($postId);
+            // J'utilise le modèle pour ajouter le post
+            $result = $this->postModel->deletePost($postId);
+            if ($result) {
+                $params ['successMessage'] = 'L\'article a été ajouté avec succès.';
+            } else {
+                $params ['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'article.';
+            }
+        }
+            // J'affiche le formulaire d'ajout de post
+            return $this->twig->load('post/listing.twig')->render(['posts' => $this->postModel->getAllPosts(), 'params' => $params]);
     }
 }

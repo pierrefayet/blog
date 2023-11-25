@@ -1,5 +1,4 @@
 {% extends 'layout/layout.twig' %}
-
 {% block content %}
     <h1 class="text-center">Connectez-vous pour pouvoir laisser un commentaire</h1>
     <div class="container">
@@ -13,11 +12,10 @@
                 <input type= password class="form-control" id="password" name="password" required>
             </div>
             <button type="submit" class="btn btn-primary">Se connecter</button>
+            <a href="index.php?method=register&controller=UserController" class="btn btn-primary">S'inscrire</a>
         </form>
     </div>
-
     {% if successMessage is defined %}
         <p>{{ successMessage }}</p>
     {% endif %}
-
 {% endblock content %}

@@ -7,7 +7,7 @@ use PDOException;
 
 class User
 {
-    private PDO $db;
+    public PDO $db;
 
     public function __construct(PDO $db)
     {
@@ -57,13 +57,13 @@ class User
         }
     }
 
-    public function checkUser($username, $password): bool
+    public function checkUser($username, $password, $userId): bool
     {
-        $stmt = $this->db->prepare('SELECT * FROM users WHERE username = :username');
+        $stmt = $this->db->prepare('SELECT user_id, username FROM users WHERE username = :username');
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        var_dump($row['password']);
+        var_dump($row);
         if (password_verify($password, $row['password'])) {
             return true;
         }
@@ -73,29 +73,20 @@ class User
 
     public function checkStatusUser($email, $password): bool
     {
-        $stmt = $this->db->prepare('SELECT user_status_id FROM user WHERE email = :email');
+        $stmt = $this->db->prepare('SELECT user_status_id FROM user WHERE user_status_id = 1');
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (password_verify($password, $row['password'])) {
-            return true;
-        }
-
-        return false;
+        return $row;
     }
 
-    public function getStatus(): array
+    public function getStatus($userId): array
     {
-        try {
-            $stmt = $this->db->prepare("SELECT * FROM users WHERE user_status_id = :role");
-            $stmt->bindParam(':role', $role);
+            $stmt = $this->db->prepare("SELECT user_status_id FROM users WHERE user_id = :userId");
+            $stmt->bindParam(':userId', $userId);
             $stmt->execute();
-            return $resultUsers = $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la récupération du statut : ' . $e->getMessage());
-            return [];
-        }
+            $resultUsers = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $resultUsers;
     }
 
     public function getUsername(): array

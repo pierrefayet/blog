@@ -56,12 +56,11 @@ class Post
     public function getSinglePost($postId): array
     {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM posts WHERE id = :post_id");
-            $stmt->bindParam(':post_id', $postId);
+            $stmt = $this->db->prepare("SELECT * FROM posts WHERE id = :postId");
+            $stmt->bindParam(':postId', $postId);
             $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            var_dump($postId);
-            return [$result];
+            $post= $stmt->fetch(PDO::FETCH_ASSOC);
+            return $post;
         } catch (PDOException $e) {
             error_log('Erreur lors de la récupération du post : ' . $e->getMessage());
             return [];
@@ -73,15 +72,15 @@ class Post
         try {
             $db = "SELECT * FROM posts ORDER BY creation_date DESC LIMIT 2";
             $stmt = $this->db->query($db);
-            $result =  $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return [$result];
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         } catch (PDOException $e) {
             error_log('Erreur lors de la récupération des posts : ' . $e->getMessage());
             return [];
         }
     }
 
-    public function deletePost(): bool
+    public function deletePost($postId): bool
     {
         try {
             $stmt = $this->db->prepare('DELETE FROM posts WHERE id = :postId');

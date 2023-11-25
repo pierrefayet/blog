@@ -2,22 +2,15 @@
 
 {% block content %}
     <div class="container">
-        <h1>Ajouter un nouvel article</h1>
-
-        <form method="POST" action="index.php?action=addComment&controller=CommentController">
-            <div class="form-group">
-                <label for="title">Titre du commentaire</label>
-                <input type="text" class="form-control" id="title" name="title" required>
-            </div>
-
+        <h1>Écrivez votre commentaire</h1>
+        <form method="POST">
             <div class="form-group">
                 <label for="content">Contenu du commentaire</label>
                 <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
             </div>
-
             <button type="submit" class="btn btn-primary">Ajouter</button>
-            <button type="submit" class="btn btn-primary">Modifier</button>
-            <button type="submit" class="btn btn-outline-danger mb">Supprimer</button>
+            <a href="index.php?method=addComment&controller=CommentController" type="submit" class="btn btn-primary">Modifier</a>
+            <a href="index.php?method=deleteComment&controller=commentController" type="submit" class="btn btn-outline-danger mb">Supprimer</a>
         </form>
     </div>
     {% if successMessage is defined %}

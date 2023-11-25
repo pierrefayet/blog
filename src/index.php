@@ -29,5 +29,4 @@ $requestedController = $_GET['controller'];
 $controllerManager = new ControllerManager($pdo, $twig);
 $controller = $controllerManager->route($requestedController);
 $response = $controller->$method();
-
 echo $response;
