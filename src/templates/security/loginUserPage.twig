@@ -1,6 +1,12 @@
 {% extends 'layout/layout.twig' %}
 {% block content %}
     <h1 class="text-center">Connectez-vous pour pouvoir laisser un commentaire</h1>
+    {% if errorMessage is defined %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ errorMessage }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
     <div class="container">
         <form method="POST" action="index.php?method=login&controller=UserController" >
             <div class="form-group">
@@ -15,7 +21,4 @@
             <a href="index.php?method=register&controller=UserController" class="btn btn-primary">S'inscrire</a>
         </form>
     </div>
-    {% if successMessage is defined %}
-        <p>{{ successMessage }}</p>
-    {% endif %}
 {% endblock content %}

@@ -57,18 +57,17 @@ class User
         }
     }
 
-    public function checkUser($username, $password, $userId): bool
+    public function checkUser($username, $password): ?array
     {
-        $stmt = $this->db->prepare('SELECT user_id, username FROM users WHERE username = :username');
+        $stmt = $this->db->prepare('SELECT role, user_id, username, password FROM users WHERE username = :username');
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        var_dump($row);
-        if (password_verify($password, $row['password'])) {
-            return true;
+        if ($row && password_verify($password, $row['password'])) {
+            return $row;
         }
 
-        return false;
+        return null;
     }
 
     public function checkStatusUser($email, $password): bool
@@ -80,13 +79,19 @@ class User
         return $row;
     }
 
-    public function getStatus($userId): array
+    public function login($username, $password): bool
     {
-            $stmt = $this->db->prepare("SELECT user_status_id FROM users WHERE user_id = :userId");
-            $stmt->bindParam(':userId', $userId);
-            $stmt->execute();
-            $resultUsers = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $resultUsers;
+        $user = $this->checkUser($username, $password);
+        if ($user) {
+            $_SESSION['username'] = $username;
+            $_SESSION['userId'] = $user['user_id'];
+            $_SESSION['role'] = $user['role'];
+            $_SESSION['logged'] = true;
+            header('Location: http://localhost:8080/src/index.php?method=home&controller=HomePageController');
+            return true;
+        }
+
+        return false;
     }
 
     public function getUsername(): array

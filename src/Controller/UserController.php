@@ -27,7 +27,6 @@ class UserController
      */
     public function register(): string
     {
-
         $template = $this->twig->load('security/registerUserPage.twig');
         $params = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,18 +38,11 @@ class UserController
 
             $resultSqlUser = $this->model->insertUser($username, $email, $password);
             if ($resultSqlUser) {
-                $params ['successMessage'] = 'L\'utilisateur a été ajouté avec succès.';
-                $_SESSION['logged'] = true;
-                $_SESSION['username'] = $username;
-                $_SESSION['email'] = $email;
-                $_SESSION['userId'] = $this->model->db->lastInsertId();
-                $_SESSION['password'] = $password;
-                $_SESSION['password'] = $password;
-                header('Location:http://localhost:8080/src/index.php?method=home&controller=HomePageController');
+                $this->model->login($username, $password);
 
-                return $template->render($params);
+                return '';
             } else {
-                $params ['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'utilisateur.';
+                $params['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'utilisateur.';
             }
         }
         return $template->render($params);
@@ -63,26 +55,13 @@ class UserController
         if ('POST' === $_SERVER['REQUEST_METHOD']) {
             if (isset($_POST['username']) && isset($_POST['password'])) {
                 $username = $_POST['username'];
-                $password = '';
-                $userId = '';
-                $user = $this->model->checkUser($username, $password, $userId);
-                var_dump($user);
-                if ($user) {
-                    var_dump('la');
-                    $_SESSION['logged'] = true;
-                    $_SESSION['username'] = $username;
-                    $_SESSION['isConnected'] = true;
-                    $_SESSION['userId'] = $userId;
-                    $params['successMessage'] = "Connexion réussie, bienvenue $username.";
-                    var_dump($_SESSION);
-                    header('Location: http://localhost:8080/src/index.php?method=home&controller=HomePageController');
+                $password = $_POST['password'];
 
-                    return $template->render($params);
+                if (!$this->model->login($username, $password)) {
+                     $params['errorMessage'] = 'Échec de connexion, veuillez réessayer.';
                 } else {
-                    $params['errorMessage'] = 'Échec de connexion, veuillez réessayer.';
+                    return '';
                 }
-            } else {
-                $params['errorMessage'] = 'Veuillez remplir tous les champs.';
             }
         }
 
@@ -91,7 +70,7 @@ class UserController
 
     public function logout(): string
     {
-        $_SESSION['isConnected'] = false;
+        $_SESSION['logged'] = false;
         $_SESSION = [];
         session_destroy();
         header('Location: http://localhost:8080/src/index.php?method=home&controller=HomePageController');

@@ -91,4 +91,22 @@ class Post
             return false;
         }
     }
+
+    public function getAllComments($commentId): array
+    {
+        try {
+            $stmt = $this->db->prepare(
+                "SELECT comments.content, users.username
+                       FROM comments
+                       INNER JOIN users ON comments.comment_user_id = users.user_id
+                       WHERE comments.comment_post_id = :postId");
+            $stmt->bindParam(':commentId', $commentId);
+            $stmt->execute();
+            $allComment = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $allComment;
+        } catch (PDOException $e) {
+            error_log('Erreur lors de la récupération des commentaires : ' . $e->getMessage());
+            return [];
+        }
+    }
 }

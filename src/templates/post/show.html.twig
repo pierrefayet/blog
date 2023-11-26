@@ -8,13 +8,13 @@
                     <div class="card-body">
                         <h3 class="card-title text-black-50">{{ post.title }}</h3>
                         <p class="card-text text-black-50">{{ post.content }}</p>
-                        {% if session['isConnected'] is defined and session['isConnected'] %}
+                        {% if session['logged'] is defined and session['logged'] %}
                             <a href="index.php?method=update&controller=PostController&postId={{ post.id }}"
                                type="submit" class="btn btn-primary">Modifier</a>
                             <a href="index.php?method=deletePost&controller=PostController&postId={{ post.id }}"
                                type="submit" class="btn btn-outline-danger mb">Supprimer</a>
                         {% endif %}
-                        {% if session['isConnected'] is defined and session['isConnected'] %}
+                        {% if session['logged'] is defined and session['logged'] %}
                             <a href="index.php?method=addComment&controller=CommentController&postId={{ post.id }}"
                                type="submit" class="btn btn-primary">Commenter</a>
                         {% endif %}

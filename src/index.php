@@ -16,6 +16,8 @@ $loader = new FilesystemLoader('templates/');
 $twig = new Environment($loader, ['debug' => true, 'strict_variables' => true]);
 $twig->addExtension(new DebugExtension());
 session_start();
+
+$_SESSION['logged'] = isset($_SESSION['logged']);
 $maxInactiveTime = 1800;
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $maxInactiveTime)) {
     session_unset();

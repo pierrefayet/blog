@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
+use App\Model\Comment;
 use App\Model\Post;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use Twig\Loader\FilesystemLoader;
 
 class PostController
 {
@@ -33,7 +33,8 @@ class PostController
 
     public function index(): string
     {
-        return $this->twig->load('post/listing.twig')->render(['posts' => $this->postModel->getAllPosts()]);
+        $commentId = $_GET['commentId'];
+        return $this->twig->load('post/listing.twig')->render(['posts' => $this->postModel->getAllPosts(), 'comment' => $this->postModel->getAllComments($commentId)]);
     }
 
     public function addPost(): string

@@ -13,7 +13,7 @@
                                 <a href="index.php?method=indexComment&controller=CommentController&commentId={{ comment.id }}"></a>
                             </div>
                             <div class="comments">
-                                {% for comment in post.comments %}
+                                {% for comment in comments %}
                                     <div class="comment">
                                         <h4 class="card-title text-black-50">{{ comment.title }}</h4>
                                         <p class="card-text text-black-50">{{ comment.content }}</p>

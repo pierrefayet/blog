@@ -5,11 +5,8 @@ namespace App\Manager;
 use App\Controller\AboutController;
 use App\Controller\CommentController;
 use App\Controller\HomePageController;
-use App\Controller\ListingController;
 use App\Controller\PostController;
-use App\Controller\UpdatePostController;
 use App\Controller\UserController;
-use App\Controller\UserRegistrationController;
 use App\Model\Comment;
 use App\Model\User;
 use App\Model\Post;
@@ -41,11 +38,6 @@ class ControllerManager
         if ($requestedController === 'AboutController') {
             $model = new Post($this->pdo);
             $controller = new AboutController($model, $this->twig);
-        }
-
-        if ($requestedController === 'ListingController') {
-            $model = new Post($this->pdo);
-            $controller = new ListingController($model, $this->twig);
         }
 
         if ($requestedController === 'PostController') {

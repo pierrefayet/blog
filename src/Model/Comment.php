@@ -16,10 +16,6 @@ class Comment
 
     public function insertComment($postId, $userId, $content): bool
     {
-        if (empty($userId)) {
-            return false; // L'utilisateur n'est pas valide.
-        }
-        $userId = $_SESSION['userId'];
         $stmt = $this->db->prepare('INSERT INTO comments (comment_post_id, comment_user_id, content, creation_date) VALUES (:postId, :userId, :content, NOW())');
         $stmt->bindParam(':postId', $postId);
         $stmt->bindParam(':userId', $userId);
@@ -64,18 +60,6 @@ class Comment
             return $getComment;
         } catch (PDOException $e) {
             error_log('Erreur lors de la récupération du commentaire : ' . $e->getMessage());
-            return [];
-        }
-    }
-
-    public function getAllComments(): array
-    {
-        try {
-            $db = "SELECT * FROM comments";
-            $stmt = $this->db->query($db);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la récupération des commentaires : ' . $e->getMessage());
             return [];
         }
     }
