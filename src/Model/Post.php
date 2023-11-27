@@ -92,15 +92,15 @@ class Post
         }
     }
 
-    public function getAllComments($commentId): array
+    public function getAllComments($postId): array
     {
         try {
             $stmt = $this->db->prepare(
-                "SELECT comments.content, users.username
+                "SELECT comments.content, comments.creation_date, users.username
                        FROM comments
                        INNER JOIN users ON comments.comment_user_id = users.user_id
                        WHERE comments.comment_post_id = :postId");
-            $stmt->bindParam(':commentId', $commentId);
+            $stmt->bindParam(':postId', $postId);
             $stmt->execute();
             $allComment = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $allComment;

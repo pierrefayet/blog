@@ -6,8 +6,23 @@
             <div class="col-md-6 mb-4">
                 <div class="card custom-card">
                     <div class="card-body">
-                        <h3 class="card-title text-black-50">{{ post.title }}</h3>
-                        <p class="card-text text-black-50">{{ post.content }}</p>
+                        <h3 class="card-title text-black-40">{{ post.title }}</h3>
+                        <p class="card-text text-black-40">{{ post.content }}</p>
+                        {% if commentsByPost[post.id] is defined %}
+                            <div class="comments mt-3">
+                                {% for comment in commentsByPost[post.id] %}
+                                    <div class="card comment-card mb-2">
+                                        <div class="card-body">
+                                            <p class="card-text">{{ comment.content }}</p>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            <p class="mb-0">{{ comment.username }}</p>
+                                            <p class="mb-0">{{ comment.creation_date|date('d/m/Y H:i') }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                         {% if session['logged'] is defined and session['logged'] %}
                             <a href="index.php?method=update&controller=PostController&postId={{ post.id }}"
                                type="submit" class="btn btn-primary">Modifier</a>
@@ -39,6 +54,11 @@
         .custom-card:hover {
             transform: scale(1.02);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .comment-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
         }
     </style>
 {% endblock %}

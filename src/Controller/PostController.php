@@ -33,8 +33,14 @@ class PostController
 
     public function index(): string
     {
-        $commentId = $_GET['commentId'];
-        return $this->twig->load('post/listing.twig')->render(['posts' => $this->postModel->getAllPosts(), 'comment' => $this->postModel->getAllComments($commentId)]);
+        $posts = $this->postModel->getAllPosts();
+        $commentsByPost = [];
+         foreach ($posts as $post) {
+             $postId = $post['id'];
+             $comments = $this->postModel->getAllComments($postId);
+             $commentsByPost[$postId] = $comments;
+         }
+        return $this->twig->load('post/listing.twig')->render(['posts' => $posts, 'commentsByPost' => $commentsByPost]);
     }
 
     public function addPost(): string

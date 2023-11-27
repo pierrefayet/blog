@@ -8,15 +8,16 @@
             <div class="col-md-6 mb-4">
                 <div class="card custom-card">
                     <div class="card-body">
-                        <h2 class="card-title text-black-40">{{ post.title }}</h2>
-                        <p class="card-text text-black-40">{{ post.content }}</p>
+                        <h2 class="card-title text-black-50">{{ post.title }}</h2>
+                        <p class="card-text text-black-50">{{ post.content }}</p>
                         <a href="index.php?method=show&controller=PostController&postId={{ post.id }}">Afficher plus...</a>
                     </div>
-                    {% if comment is defined  %}
-                        {% for comment in comment %}
+                    {% if commentsByPost is defined  %}
+                        {% for comment in commentsByPost[post.id] %}
                             <div class="comment mb-4">
                                 <div class="card-text text-black-25">
                                     <p>{{ comment.username }}</p>
+                                    <p>{{ comment.creation_date|date('Y-m-d H:i:s') }}</p>
                                     <p>{{ comment.content }}</p>
                                 </div>
                             </div>
