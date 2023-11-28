@@ -18,15 +18,13 @@ class User
     {
         try {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $this->db->prepare('INSERT INTO users (username, email, password, user_status_id) VALUES (:username,:email, :password, "1")');
+            $stmt = $this->db->prepare('INSERT INTO users (username, email, password, role) VALUES (:username,:email, :password, "user")');
             $stmt->bindParam(':username', $username);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $hashedPassword);
-
             return $stmt->execute();
         } catch (PDOException $e) {
-            $logFilePath = __DIR__ . '/logs/error.log';
-            error_log('Erreur lors de l\'insertion d\'un utilisateur : ' . $e->getMessage(), 3, $logFilePath);
+            error_log('Erreur lors de la modification d\'un utilisateur: ' . $e->getMessage());
             return false;
         }
     }
@@ -45,38 +43,19 @@ class User
         }
     }
 
-    public function deleteUser($userId): bool
-    {
-        try {
-            $stmt = $this->db->prepare('DELETE FROM user WHERE id = :userId');
-            $stmt->bindParam(':userId', $userId);
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la suppression de l\'utilisateur: ' . $e->getMessage());
-            return false;
-        }
-    }
-
     public function checkUser($username, $password): ?array
     {
         $stmt = $this->db->prepare('SELECT role, user_id, username, password FROM users WHERE username = :username');
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        var_dump($row);
         if ($row && password_verify($password, $row['password'])) {
+            var_dump($password, 'ici');
             return $row;
         }
 
         return null;
-    }
-
-    public function checkStatusUser($email, $password): bool
-    {
-        $stmt = $this->db->prepare('SELECT user_status_id FROM user WHERE user_status_id = 1');
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row;
     }
 
     public function login($username, $password): bool

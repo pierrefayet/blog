@@ -1,5 +1,11 @@
 {% extends 'layout/layout.twig' %}
 {% block content %}
+    {% if errorMessage is defined %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ errorMessage }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
     <div class="container">
         <h2 class="mt-5">Modifier l'article</h2>
         <form method="POST" action="index.php?method=update&controller=PostController&postId={{ post.id }}">
@@ -14,11 +20,4 @@
             <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
         </form>
     </div>
-    {% if successMessage is defined %}
-        <p>{{ successMessage }}</p>
-    {% endif %}
-
-    {% if errorMessage is defined %}
-        <p>{{ errorMessage }}</p>
-    {% endif %}
 {% endblock %}

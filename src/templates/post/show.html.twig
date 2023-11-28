@@ -8,18 +8,14 @@
                     <div class="card-body">
                         <h3 class="card-title text-black-40">{{ post.title }}</h3>
                         <p class="card-text text-black-40">{{ post.content }}</p>
-                        {% if commentsByPost[post.id] is defined %}
+                        {% if commentsByPost is defined %}
                             <div class="comments mt-3">
-                                {% for comment in commentsByPost[post.id] %}
-                                    <div class="card comment-card mb-2">
-                                        <div class="card-body">
-                                            <p class="card-text">{{ comment.content }}</p>
+                                {% for comment in commentsByPost %}
+                                        <div class="card comment-card mb-2 m-lg-2">
+                                            <p class="mb-0 m-lg-2">{{ comment.username }}</p>
+                                            <p class="card-text m-lg-2">{{ comment.content }}</p>
+                                            <p class="mb-0 m-lg-2">{{ comment.creation_date|date('d/m/Y H:i') }}</p>
                                         </div>
-                                        <div class="card-footer text-muted">
-                                            <p class="mb-0">{{ comment.username }}</p>
-                                            <p class="mb-0">{{ comment.creation_date|date('d/m/Y H:i') }}</p>
-                                        </div>
-                                    </div>
                                 {% endfor %}
                             </div>
                         {% endif %}

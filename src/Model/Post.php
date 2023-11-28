@@ -109,4 +109,16 @@ class Post
             return [];
         }
     }
+
+    public function deleteAllComment($postId): bool
+    {
+        try {
+            $stmt = $this->db->prepare('DELETE FROM comments WHERE id = :commentId');
+            $stmt->bindParam(':commentId', $commentId);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            error_log('Erreur lors de la suppression du post : ' . $e->getMessage());
+            return false;
+        }
+    }
 }

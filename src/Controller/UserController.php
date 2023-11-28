@@ -37,8 +37,7 @@ class UserController
             }
 
             $resultSqlUser = $this->model->insertUser($username, $email, $password);
-            if ($resultSqlUser) {
-                $this->model->login($username, $password);
+            if ($resultSqlUser && $this->model->login($username, $password)) {
 
                 return '';
             } else {
@@ -58,7 +57,7 @@ class UserController
                 $password = $_POST['password'];
 
                 if (!$this->model->login($username, $password)) {
-                     $params['errorMessage'] = 'Échec de connexion, veuillez réessayer.';
+                     $params['errorMessage'] = 'Échec de connexion, si vous n\'avez pas de compre veuillez vous inscrire, sinon veuillez réessayer.';
                 } else {
                     return '';
                 }

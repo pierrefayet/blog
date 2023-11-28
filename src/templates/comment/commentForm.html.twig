@@ -3,6 +3,7 @@
 {% block content %}
     <div class="container">
         <h1>Commentaire</h1>
+        {% if unAuthorize is not defined or false == unAuthorize  %}
         <form method="POST">
             <div class="form-group">
                 <label for="content">Contenu du commentaire</label>
@@ -21,6 +22,7 @@
                 {% endif %}
             </div>
         </form>
+        {% endif %}
     </div>
     {% if successMessage is defined %}
         <div class="alert alert-success">{{ successMessage }}</div>

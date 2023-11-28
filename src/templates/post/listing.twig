@@ -1,6 +1,11 @@
 {% extends 'layout/layout.twig' %}
-
-    {% block content %}
+{% block content %}
+    {% if succesMessage is defined %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ succesMessage }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
 <div class="container">
     <h2 class="mt-5">Listes des articles publiés:</h2>
     <div class="row mt-4">
@@ -12,17 +17,6 @@
                         <p class="card-text text-black-50">{{ post.content }}</p>
                         <a href="index.php?method=show&controller=PostController&postId={{ post.id }}">Afficher plus...</a>
                     </div>
-                    {% if commentsByPost is defined  %}
-                        {% for comment in commentsByPost[post.id] %}
-                            <div class="comment mb-4">
-                                <div class="card-text text-black-25">
-                                    <p>{{ comment.username }}</p>
-                                    <p>{{ comment.creation_date|date('Y-m-d H:i:s') }}</p>
-                                    <p>{{ comment.content }}</p>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
                 </div>
             </div>
         {% endfor %}

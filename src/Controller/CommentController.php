@@ -34,42 +34,41 @@ class CommentController
 
     public function indexComment(): string
     {
-        $commentId = $_GET['commentId'];
-        return $this->twig->load('comment/listingComment.html.twig')->render(['comment' => $this->commentModel->getSingleComment($commentId)]);
+        $comments = $this->commentModel->getComments($postId);
+        return $this->twig->load('comment/listingComment.html.twig')->render(['comments' => $comments]);
     }
 
     public function addComment(): string
     {
-        var_dump($_SESSION);
-
         $params = [];
         $postId = $_GET['postId'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!isset($_SESSION['role'])) {
+                $params['unAuthorize'] = true;
+                $params['errorMessage'] = 'Vous devez être connecté pour poster un commentaire.';
+                return $this->twig->load('comment/commentForm.html.twig')->render($params);
+            }
             // Je soumet le formulaire pour ajouter un commentaire ici
-            if (isset($_SESSION['logged']) && !empty($_POST['content'])) {
+            if  (!empty($_POST['content'])) {
                 $userId = $_SESSION['userId'];
                 $content = $_POST['content'];
-                var_dump($userId,'ici');
 
                 // J'utilise le modèle pour ajouter le commentaire
                 $result = $this->commentModel->insertComment($postId, $userId, $content);
             }
-           // var_dump($result);
             if ($result) {
                 $params['successMessage'] = 'Le commentaire a été ajouté avec succès.';
-                header("Location: index.php?method=show&controller=CommentController&postId={$postId}");
-                exit();
             } else {
-                $params['errorMessage'] = 'Une erreur est survenue lors de l\'ajout du commentaire.';
+                $params['errorMessage'] = 'Une erreur est survenue lors de l\'ajout d\'un article.';
             }
         }
-
         // J'affiche le formulaire d'ajout du commentaire
         return $this->twig->load('comment/commentForm.html.twig')->render($params);
     }
 
     public function updateComment(): string
     {
+        //implementer pour l'admin seulement
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Récupérez les données du formulaire
@@ -96,6 +95,8 @@ class CommentController
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $params = [];
             $commentId = $_GET['commentId'];
+            $postId = $this->commentModel->getPost($commentId)['id'];
+
             // J'utilise le modèle pour ajouter le commentaire
             $result = $this->commentModel->deleteComment($commentId);
             if ($result) {
@@ -105,6 +106,7 @@ class CommentController
             }
         }
         // J'affiche le formulaire d'ajout du commentaire
-        return $this->twig->load('comment/listingComment.html.twig')->render(['comment' => $this->commentModel->getAllComments(), 'params' => $params]);
+        header("location : index.php?method=show&controller=PostController&postId=$postId");
+        exit();
     }
 }

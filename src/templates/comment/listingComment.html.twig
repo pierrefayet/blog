@@ -1,44 +1,53 @@
 {% extends 'layout/layout.twig' %}
 
-    {% block content %}
-        <div class="container">
-            <h2 class="mt-5">Listes des commentaires publiés soumis à la modération:</h2>
-            <div class="row mt-4">
+{% block content %}
+    <div class="container">
+        <h2 class="mt-5">Listes des commentaires publiés soumis à la modération:</h2>
+        <div class="row mt-4">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Auteur</th>
+                    <th scope="col">Contenu</th>
+                    <th scope="col">Date de création</th>
+                    <th scope="col">Statut</th>
+                </tr>
+                </thead>
+                <tbody>
                 {% for comment in comments %}
-                    <div class="col-md-6 mb-4">
-                        <div class="card custom-card">
-                            <div class="card-body">
-                                <p class="card-text text-black-50">{{ comment.content }}</p>
-                                <p class="card-text text-black-50">{{ comment.author }}</p>
-                                <a href="index.php?method=indexComment&controller=CommentController&commentId={{ comment.id }}"></a>
-                            </div>
-                            <div class="comments">
-                                {% for comment in comments %}
-                                    <div class="comment">
-                                        <h4 class="card-title text-black-50">{{ comment.title }}</h4>
-                                        <p class="card-text text-black-50">{{ comment.content }}</p>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
+                    <tr>
+                        <th scope="row">{{ comment.id }}</th>
+                        <td>{{ comment.username }}</td>
+                        <td>{{ comment.content }}</td>
+                        <td>{{ comment.creation_date }}</td>
+                        <td>
+                            {% if comment.is_approved %}
+                                <img src="approuve.gif" alt="Approuvé">
+                            {% else %}
+                                <img src="refuse.gif" alt="Refusé">
+                            {% endif %}
+                        </td>
+                    </tr>
                 {% endfor %}
-            </div>
+                </tbody>
+            </table>
         </div>
-        <style>
-            h2, h3 {
-                color: #333;
-            }
-            .custom-card {
-                background-color: #9AC8EB;
-                border: 1px solid #e0e0e0;
-                border-radius: 8px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                transition: transform 0.3s, box-shadow 0.3s;
-            }
-            .custom-card:hover {
-                transform: scale(1.02);
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            }
-        </style>
-    {% endblock %}
+    </div>
+    <style>
+        h2, h3 {
+            color: #333;
+        }
+        .custom-card {
+            background-color: #9AC8EB;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .custom-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+{% endblock %}
