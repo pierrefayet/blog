@@ -49,9 +49,7 @@ class User
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        var_dump($row);
         if ($row && password_verify($password, $row['password'])) {
-            var_dump($password, 'ici');
             return $row;
         }
 

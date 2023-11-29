@@ -23,16 +23,11 @@ class Comment
         return $stmt->execute();
     }
 
-    public function modifyComment($commentId): bool
+    public function modifyStatusComment($commentId): bool
     {
-        try {
-            $stmt = $this->db->prepare('UPDATE comment SET content = :content WHERE id = :commentId');
+            $stmt = $this->db->prepare('UPDATE comments SET is_approved = 1 WHERE id = :commentId');
             $stmt->bindParam(':commentId', $commentId);
             return $stmt->execute();
-        } catch (PDOException $e) {
-             error_log('Erreur lors de la modification d\'un utilisateur: ' . $e->getMessage());
-            return false;
-        }
     }
 
     public function deleteComment($commentId): bool
@@ -53,8 +48,7 @@ class Comment
             $stmt = $this->db->prepare("SELECT * FROM comments WHERE id = :commentId");
             $stmt->bindParam(':$commentId', $commentId);
             $stmt->execute();
-            $getComment= $stmt->fetch(PDO::FETCH_ASSOC);
-            var_dump($getComment);
+            $getComment = $stmt->fetch(PDO::FETCH_ASSOC);
             return $getComment;
         } catch (PDOException $e) {
             error_log('Erreur lors de la récupération du commentaire : ' . $e->getMessage());
@@ -76,21 +70,17 @@ class Comment
         }
     }
 
-    public function getComments($postId): array
+    public function getAllComments(): array
     {
-        try {
             $stmt = $this->db->prepare(
-                "SELECT comments.content, comments.creation_date, users.username
+                "SELECT comments.id, comments.content, comments.creation_date, users.username , posts.title
                        FROM comments
-                       INNER JOIN users ON comments.comment_user_name= users.user_name
-                       WHERE comments.comment_post_id = :postId");
-            $stmt->bindParam(':postId', $postId);
+                       INNER JOIN users ON comments.comment_user_id = users.user_id
+                       INNER JOIN posts ON comments.comment_post_id = posts.id
+                       WHERE comments.is_approved = 0
+                       ");
             $stmt->execute();
             $allComment = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $allComment;
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la récupération des commentaires : ' . $e->getMessage());
-            return [];
-        }
     }
 }

@@ -25,7 +25,7 @@ class HomePageController
      */
     public function home(): string
     {
-        var_dump($_SESSION);
-        return $this->twig->load('homePage.twig')->render(['post' => $this->postModel->getNewPosts()]);
+        $url = "/public/asset/cv/Cv_Pierre_Fayet.pdf";
+        return $this->twig->load('homePage.twig')->render(['post' => $this->postModel->getNewPosts(), 'cvUrl' => $url]);
     }
 }

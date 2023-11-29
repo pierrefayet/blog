@@ -7,26 +7,28 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col"></th>
+                    <th scope="col">Titre du commentaire</th>
                     <th scope="col">Auteur</th>
                     <th scope="col">Contenu</th>
                     <th scope="col">Date de création</th>
-                    <th scope="col">Statut</th>
+                    <th scope="col">Validation</th>
+                    <th scope="col">Suppression</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for comment in comments %}
                     <tr>
-                        <th scope="row">{{ comment.id }}</th>
+                        <th scope="row"></th>
+                        <td>{{ comment.title }}</td>
                         <td>{{ comment.username }}</td>
                         <td>{{ comment.content }}</td>
                         <td>{{ comment.creation_date }}</td>
                         <td>
-                            {% if comment.is_approved %}
-                                <img src="approuve.gif" alt="Approuvé">
-                            {% else %}
-                                <img src="refuse.gif" alt="Refusé">
-                            {% endif %}
+                            <a href="index.php?method=handlerApproveComment&controller=CommentController&commentId={{ comment.id }}"><img src="../public/asset/img/check.png" alt="Validate"></a>
+                        </td>
+                        <td>
+                            <a href="index.php?method=handlerDeleteComment&controller=CommentController&commentId={{ comment.id }}"><img src="../public/asset/img/rejected.png" alt="Refusé"></a>
                         </td>
                     </tr>
                 {% endfor %}

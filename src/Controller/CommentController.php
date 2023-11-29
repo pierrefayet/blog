@@ -34,7 +34,8 @@ class CommentController
 
     public function indexComment(): string
     {
-        $comments = $this->commentModel->getComments($postId);
+        $comments = $this->commentModel->getAllComments();
+
         return $this->twig->load('comment/listingComment.html.twig')->render(['comments' => $comments]);
     }
 
@@ -66,47 +67,42 @@ class CommentController
         return $this->twig->load('comment/commentForm.html.twig')->render($params);
     }
 
-    public function updateComment(): string
-    {
-        //implementer pour l'admin seulement
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            // Récupérez les données du formulaire
-            $content = $_POST['content'];
-            $author = $_POST['content'];
-            $commentId = $_GET['commentId'];
-
-
-            // Utilisez le modèle pour mettre à jour le commentaire
-            $result = $this->commentModel->modifyComment($author, $content);
-            if ($result) {
-                $_SESSION['successMessage'] = 'Le commentaire a été mis à jour avec succès.';
-            } else {
-                $_SESSION['errorMessage'] = 'Une erreur est survenue lors de la mise à jour du commentaire.';
-            }
-        }
-
-        $commentId = $_GET['commentId'];
-        return $this->twig->load('comment/commentForm.html.twig')->render(['comment' => $this->commentModel->getSingleComment($commentId), 'params' => $params]);
-    }
-
-    public function deleteComment(): string
+    public function handlerDeleteComment(): string
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $params = [];
             $commentId = $_GET['commentId'];
-            $postId = $this->commentModel->getPost($commentId)['id'];
-
-            // J'utilise le modèle pour ajouter le commentaire
-            $result = $this->commentModel->deleteComment($commentId);
-            if ($result) {
-                $params['successMessage'] = 'Le commentaire a été ajouté avec succès.';
-            } else {
-                $params['errorMessage'] = 'Une erreur est survenue lors de l\'ajout du commentaire.';
+            if ($commentId) {
+                // Appeler la méthode pour supprimer le commentaire
+                $result = $this->commentModel->deleteComment($commentId);
+                if ($result) {
+                    $params['successMessage'] = 'Le statut du commentaire a été modifié avec succès.';
+                    return $this->indexComment();
+                } else {
+                    $params['errorMessage'] = 'Une erreur est survenue lors de la modification du statut du commentaire.';
+                }
             }
         }
-        // J'affiche le formulaire d'ajout du commentaire
-        header("location : index.php?method=show&controller=PostController&postId=$postId");
-        exit();
+        // J'affiche le listing mis à jour
+        return $this->indexComment();
+    }
+
+    public function handlerApproveComment(): string
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            // Récupérer l'ID du commentaire depuis les données POST ou GET
+            $commentId = $_POST['commentId'] ?? $_GET['commentId'] ?? null;
+            if ($commentId) {
+                // Appeler la méthode pour modifier le statut du commentaire
+                $result = $this->commentModel->modifyStatusComment($commentId);
+                if ($result) {
+                    $params['successMessage'] = 'Le statut du commentaire a été modifié avec succès.';
+                    return $this->indexComment();
+                } else {
+                    $params['errorMessage'] = 'Une erreur est survenue lors de la modification du statut du commentaire.';
+                }
+            }
+        }
+        // J'affiche le listing mis à jour
+        return $this->indexComment();
     }
 }

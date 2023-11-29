@@ -44,8 +44,8 @@ class Post
     public function getAllPosts(): array
     {
         try {
-            $db = "SELECT * FROM posts";
-            $stmt = $this->db->query($db);
+            $stmt = $this->db->prepare("SELECT * FROM posts");
+            $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log('Erreur lors de la récupération des posts : ' . $e->getMessage());
@@ -99,7 +99,7 @@ class Post
                 "SELECT comments.content, comments.creation_date, users.username
                        FROM comments
                        INNER JOIN users ON comments.comment_user_id = users.user_id
-                       WHERE comments.comment_post_id = :postId");
+                       WHERE comments.comment_post_id = :postId AND is_approved = 1");
             $stmt->bindParam(':postId', $postId);
             $stmt->execute();
             $allComment = $stmt->fetchAll(PDO::FETCH_ASSOC);

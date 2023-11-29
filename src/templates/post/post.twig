@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container">
-        <h1>Ajouter un nouvel article</h1>
+        <h1 class="text-center">Ajouter un nouvel article</h1>
         <form method="POST" action="index.php?method=addPost&controller=PostController">
             <div class="form-group">
                 <label for="title">Titre de l'article</label>
@@ -12,7 +12,7 @@
                 <label for="content">Contenu de l'article</label>
                 <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <button type="submit" class="btn btn-primary mt-4 mb-4">Ajouter</button>
         </form>
     </div>
     {% if successMessage is defined %}

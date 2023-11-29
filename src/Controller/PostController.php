@@ -48,7 +48,6 @@ class PostController
             }
             // J'utilise le modèle pour ajouter le post
             $result = $this->postModel->insertPost($title, $content);
-            var_dump($result);
             if ($result) {
                 $params ['successMessage'] = 'L\'article a été ajouté avec succès.';
             } else {
@@ -89,7 +88,6 @@ class PostController
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $params = [];
             $postId = $_GET['postId'];
-            var_dump($postId);
             // J'utilise le modèle pour ajouter le post
             $this->postModel->deleteAllComment($postId);
             $this->postModel->deletePost($postId);

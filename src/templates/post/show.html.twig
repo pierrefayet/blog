@@ -1,8 +1,8 @@
 {% extends 'layout/layout.twig' %}
 {% block content %}
-    <div class="container">
+    <div class="container text-center">
         <h2 class="mt-5">Bonne lecture!</h2>
-        <div class="row mt-4">
+        <div class="row mt-4 justify-content-center">
             <div class="col-md-6 mb-4">
                 <div class="card custom-card">
                     <div class="card-body">
@@ -34,27 +34,4 @@
             </div>
         </div>
     </div>
-    <style>
-        h2, h3 {
-            color: #333;
-        }
-
-        .custom-card {
-            background-color: #9AC8EB;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .custom-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-        .comment-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-    </style>
 {% endblock %}

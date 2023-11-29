@@ -1,41 +1,51 @@
 {% extends 'layout/layout.twig' %}
-
 {% block content %}
-<div class="container mt-5 mb-5">
-    <div>
-        <img src="/public/asset/img/portrait.jpg" alt="Votre Photo" class="img-fluid rounded-circle float-end" style="max-width: 200px;">
-    </div>
-    <h2 class="mt-5">Bienvenue dans mon blog sur l'univers php</h2>
-    <h3>Dernière actualité:</h3>
-    <div class="row mt-4">
-        {% for posts in post %}
-            <div class="col-md-6 mb-4">
-                <div class="card custom-card">
-                    <div class="card-body">
-                       <a href="index.php?method=show&controller=PostController&postId={{ posts.id }}"><h2 class="card-title text-black-50">{{ posts.title }}</h2></a>
-                        <a href="index.php?method=show&controller=PostController&postId={{ posts.id }}"><p class="card-text text-black-50">{{ posts.content }}</p></a>
-                        <a href="index.php?method=show&controller=PostController&postId={{ posts.id }}">Afficher plus...</a>
+    <div class="container mt-5 mb-5">
+        <h2 class="mt-5 mb-5 text-center">Bienvenue dans mon blog sur l'univers php</h2>
+        <h3>Dernière actualité:</h3>
+        <div class="row mt-4">
+            {% for posts in post %}
+                <div class="col-md-6 mb-4">
+                    <div class="card custom-card">
+                        <div class="card-body text-center">
+                            <a href="index.php?method=show&controller=PostController&postId={{ posts.id }}"><h2
+                                        class="card-title text-black-70 text-center">{{ posts.title }}</h2></a>
+                            <a href="index.php?method=show&controller=PostController&postId={{ posts.id }}"><p
+                                        class="card-text text-black-60">{{ posts.content }}</p></a>
+                            <a class="" href="index.php?method=show&controller=PostController&postId={{ posts.id }}"><p
+                                        class="card-text text-black-50">Afficher plus...</p></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-</div>
-    <style>
-        /* Styles CSS personnalisés */
-        h2, h3 {
-            color: #333;
-        }
-        .custom-card {
-            background-color: #9AC8EB;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .custom-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+    <form method="post" class="mb-5">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form method="POST" action="/src/index.php?action=about&controller=AboutController"
+                          class="border p-4">
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">Nom</label>
+                            <input type="text" class="form-control" id="nom" name="nom" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="5" name="message"
+                                      required></textarea>
+                        </div>
+                            <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="text-center mt-4 mb-3">
+        <a href="../../public/asset/cv/Cv_Pierre_Fayet.pdf" class="btn btn-primary" target="_blank">Télécharger mon CV</a>
+    </div>
 {% endblock %}
