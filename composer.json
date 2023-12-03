@@ -15,7 +15,8 @@
         "twig/twig": "^3.7",
         "ext-pdo": "*",
         "tracy/tracy": "^2.10",
-        "symfony/asset": "^6.3"
+        "symfony/asset": "^6.3",
+        "phpmailer/phpmailer": "^6.9"
     },
     "config": {
         "preferred-install": {
