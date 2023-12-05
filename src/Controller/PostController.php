@@ -11,12 +11,12 @@ use Twig\Error\SyntaxError;
 
 class PostController
 {
-    private Post $postModel; // On injecte le modèle Post
+    private Post $postModel;
     private Environment $twig;
 
     public function __construct(Post $postModel, Environment $twig)
     {
-        $this->postModel = $postModel; // on injecte le modèle  Post dans le constructeur;
+        $this->postModel = $postModel;
         $this->twig = $twig;
     }
 
@@ -28,7 +28,7 @@ class PostController
     public function show(): string
     {
         $postId = $_GET['postId'];
-        return($this->twig->load('post/show.html.twig')->render(['post' => $this->postModel->getSinglePost($postId), 'commentsByPost' => $this->postModel->getAllComments($postId)]));
+        return ($this->twig->load('post/show.html.twig')->render(['post' => $this->postModel->getSinglePost($postId), 'commentsByPost' => $this->postModel->getAllComments($postId)]));
     }
 
     public function index(): string
@@ -61,24 +61,24 @@ class PostController
     public function update(): string
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            // Récupérez les données du formulaire
             $title = $_POST['title'];
             $content = $_POST['content'];
             $postId = $_GET['postId'];
 
 
-            // Utilisez le modèle pour mettre à jour le post
             $result = $this->postModel->modifyPost($title, $content, $postId);
             if ($result) {
                 $params['successMessage'] = 'L\'article a été mis à jour avec succès.';
                 $posts = $this->postModel->getAllPosts();
                 return $this->twig->load('post/listing.twig')->render(['posts' => $posts, 'params' => $params]);
+
             } else {
                 $params['errorMessage'] = 'Une erreur est survenue lors de la mise à jour de l\'article.';
                 return $this->twig->load('post/updatePost.twig')->render(['post' => $this->postModel->getSinglePost($postId)]);
+
             }
         }
+
         $postId = $_GET['postId'];
         return $this->twig->load('post/updatePost.twig')->render(['post' => $this->postModel->getSinglePost($postId)]);
     }
@@ -86,14 +86,13 @@ class PostController
     public function deletePost(): string
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $params = [];
             $postId = $_GET['postId'];
-            // J'utilise le modèle pour ajouter le post
             $this->postModel->deleteAllComment($postId);
             $this->postModel->deletePost($postId);
         }
-            // J'affiche le formulaire d'ajout de post
-            return $this->twig->load('post/listing.twig')->render(['posts' => $this->postModel->getAllPosts()]);
+
+
+        return $this->twig->load('post/listing.twig')->render(['posts' => $this->postModel->getAllPosts()]);
     }
 
 }

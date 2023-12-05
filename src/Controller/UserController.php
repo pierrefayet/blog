@@ -44,6 +44,7 @@ class UserController
                 $params['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'utilisateur.';
             }
         }
+
         return $template->render($params);
     }
 
@@ -59,7 +60,9 @@ class UserController
                 if (!$this->model->login($username, $password)) {
                      $params['errorMessage'] = 'Échec de connexion, si vous n\'avez pas de compre veuillez vous inscrire, sinon veuillez réessayer.';
                 } else {
+
                     return '';
+
                 }
             }
         }

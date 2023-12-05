@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const handleScroll = function () {
         if (!document.body.contains(mainNav)) {
             window.removeEventListener("scroll", handleScroll);
-            return ;
+            return;
 
         }
 
