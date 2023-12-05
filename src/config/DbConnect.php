@@ -17,7 +17,7 @@ class DbConnect
     /**
      * @throws Exception
      */
-    public function __construct($host, $dbname, $username, $password)
+    public function __construct(string $host, string $dbname, string $username, string $password)
     {
         try {
             $this->db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
@@ -32,7 +32,7 @@ class DbConnect
         return $this->db;
     }
 
-    public function query($sql): false|\PDOStatement
+    public function query(string $sql): false|\PDOStatement
     {
         return $this->db->query($sql);
     }

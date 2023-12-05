@@ -17,7 +17,7 @@ class Mailer
         $this->mailer = new PHPMailer();
     }
 
-    public function send($data): void
+    public function send( string $data): void
     {
         try {
             $this->mailer->setFrom('piero69450@gmail.com', 'Mailer');

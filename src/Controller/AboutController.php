@@ -12,7 +12,7 @@ class AboutController
 {
     private Environment $twig;
     private Post $postModel;
-    public function __construct(Post $postModel,Environment $twig) {
+    public function __construct(Post $postModel, Environment $twig) {
         $this->twig = $twig;
     }
 

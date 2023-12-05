@@ -92,7 +92,7 @@ class Post
         }
     }
 
-    public function getAllComments($postId): array
+    public function getAllComments(int $postId): array
     {
         try {
             $stmt = $this->db->prepare(
@@ -110,7 +110,7 @@ class Post
         }
     }
 
-    public function deleteAllComment($postId): bool
+    public function deleteAllComment(int $commentId): bool
     {
         try {
             $stmt = $this->db->prepare('DELETE FROM comments WHERE id = :commentId');

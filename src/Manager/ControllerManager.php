@@ -29,7 +29,7 @@ class ControllerManager
         $this->twig = $twig;
     }
 
-    public function route($requestedController): object
+    public function route( string $requestedController): object
     {
         if ($requestedController === 'HomePageController') {
             $model = new Post($this->pdo);
