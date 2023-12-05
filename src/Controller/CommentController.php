@@ -44,6 +44,11 @@ class CommentController
         $params = [];
         $postId = $_GET['postId'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            var_dump($_POST);
+            if($_POST['csrf'] !== hash('sha256', 'openclassroom')) {
+
+                die('c\'est pas bien');
+            }
             if (!isset($_SESSION['role'])) {
                 $params['unAuthorize'] = true;
                 $params['errorMessage'] = 'Vous devez être connecté pour poster un commentaire.';
@@ -64,7 +69,7 @@ class CommentController
             }
         }
         // J'affiche le formulaire d'ajout du commentaire
-        return $this->twig->load('comment/commentForm.html.twig')->render($params);
+        return $this->twig->load('comment/commentForm.html.twig')->render([$params, 'hash' => hash('sha256', 'openclassroom')]);
     }
 
     public function handlerDeleteComment(): string

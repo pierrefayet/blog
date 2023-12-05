@@ -24,8 +24,8 @@
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <form method="POST" action="/src/index.php?action=about&controller=AboutController"
-                          class="border p-4">
+                    <form method="POST"
+                        class="border p-4">
                         <div class="mb-3">
                             <label for="nom" class="form-label">Nom</label>
                             <input type="text" class="form-control" id="nom" name="nom" required>
@@ -39,13 +39,15 @@
                             <textarea class="form-control" id="message" rows="5" name="message"
                                       required></textarea>
                         </div>
-                            <button type="submit" class="btn btn-primary">Envoyer</button>
+                        <input type="hidden" value="{{ hash }}" name="csrf">
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
                     </form>
                 </div>
             </div>
         </div>
     </form>
     <div class="text-center mt-4 mb-3">
-        <a href="../../public/asset/cv/Cv_Pierre_Fayet.pdf" class="btn btn-primary" target="_blank">Télécharger mon CV</a>
+        <a href="../../public/asset/cv/Cv_Pierre_Fayet.pdf" class="btn btn-primary" target="_blank">Télécharger mon
+            CV</a>
     </div>
 {% endblock %}

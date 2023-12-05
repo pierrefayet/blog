@@ -11,6 +11,7 @@ use App\Model\Comment;
 use App\Model\User;
 use App\Model\Post;
 use PDO;
+use PHPMailer\PHPMailer\PHPMailer;
 use Twig\Environment;
 
 class ControllerManager

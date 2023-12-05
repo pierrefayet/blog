@@ -74,8 +74,8 @@ class Post
             $stmt = $this->db->query($db);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la récupération des posts : ' . $e->getMessage());
+        } catch (PDOException $exception) {
+            error_log('Erreur lors de la récupération des posts : ' . $exception->getMessage());
             return [];
         }
     }

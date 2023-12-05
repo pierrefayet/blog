@@ -37,7 +37,7 @@ class Comment
             $stmt->bindParam(':commentId', $commentId);
             return $stmt->execute();
         } catch (PDOException $e) {
-            error_log('Erreur lors de la suppression de l\'utilisateur: ' . $e->getMessage());
+            error_log('Erreur lors de la suppression de l\'utilisateur: ' .  htmlspecialchars($e->getMessage()));
             return false;
         }
     }
