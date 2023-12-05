@@ -21,9 +21,6 @@ h2, h3 {
     background: rgb(63 184 251);
     background: linear-gradient(90deg, rgba(63 184 251 / 100%), rgba(70 239 252 / 100%));
     color: #151b20;
-    & p {
-
-}
 }
 
 .comment-card {
