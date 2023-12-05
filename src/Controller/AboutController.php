@@ -14,6 +14,8 @@ class AboutController
     private Post $postModel;
     public function __construct(Post $postModel, Environment $twig) {
         $this->twig = $twig;
+        // $this->postModel = $postModel; // Uncomment when needed
+
     }
 
 
