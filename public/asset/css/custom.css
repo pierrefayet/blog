@@ -1,6 +1,6 @@
 footer {
     background: rgb(63,184,251);
-    background: linear-gradient(90deg, rgba(63,184,251,1) 0%, rgba(70,239,252,1) 100%);
+    background: linear-gradient(90deg, rgba(63,184,251,100%) 0%, rgba(70,239,252,1) 100%);
 }
 
 h2, h3 {
@@ -11,15 +11,15 @@ h2, h3 {
     background-color: #d1ebff;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 20%);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .custom-card:hover {
     transform: scale(1.02);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 20%);
     background: rgb(63,184,251);
-    background: linear-gradient(90deg, rgba(63,184,251,1) 0%, rgba(70,239,252,1) 100%);
+    background: linear-gradient(90deg, rgba(63,184,251,100%), rgba(70,239,252,100%));
     color: #151b20;
     & p {
 
