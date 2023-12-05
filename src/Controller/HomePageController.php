@@ -20,6 +20,7 @@ class HomePageController
         $this->postModel = $postModel;
         $this->twig = $twig;
     }
+
     /**
      * @throws RuntimeError
      * @throws SyntaxError
@@ -27,13 +28,12 @@ class HomePageController
      */
     public function home(): string
     {
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if($_POST['csrf'] !== hash('sha256', 'openclassroom')) {
+            if ($_POST['csrf'] !== hash('sha256', 'openclassroom')) {
                 $url = "/public/asset/cv/Cv_Pierre_Fayet.pdf";
                 $params['successMessage'] = 'Un probléme est survenu, veuillez contacter l\'administrateur.';
 
-                return $this->twig->load('homePage.twig')->render(['post' => $this->postModel->getNewPosts(), 'cvUrl' => $url, 'hash' => hash('sha256', 'openclassroom')]);
+                return $this->twig->load('homePage.twig')->render([$params, 'post' => $this->postModel->getNewPosts(), 'cvUrl' => $url, 'hash' => hash('sha256', 'openclassroom')]);
             }
 
             $mailer = new Mailer();

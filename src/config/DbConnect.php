@@ -37,4 +37,3 @@ class DbConnect
         return $this->db->query($sql);
     }
 }
-

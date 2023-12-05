@@ -1,7 +1,8 @@
-User-agent: Googlebot
-Disallow:
+# Empêche l'indexation des images par les robots
 
 User-agent: *
+Disallow: /*.jpg$
+Disallow: /*.png$
+Disallow: /*.gif$
+Disallow: /images/
 Allow: /
-
-Sitemap: http://localhost:8080/src/index.php?method=show&controller=PostController.xml
