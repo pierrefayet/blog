@@ -44,7 +44,6 @@ class CommentController
         $params = [];
         $postId = $_GET['postId'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            var_dump($_POST);
             if($_POST['csrf'] !== hash('sha256', 'openclassroom')) {
 
                 die('c\'est pas bien');
