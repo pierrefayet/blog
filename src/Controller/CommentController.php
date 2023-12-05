@@ -45,14 +45,16 @@ class CommentController
         $postId = $_GET['postId'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if($_POST['csrf'] !== hash('sha256', 'openclassroom')) {
-
-                die('c\'est pas bien');
+                $params['successMessage'] = 'Un probléme est survenu, veuillez contacter l\'administrateur.';
+                return $this->twig->load('comment/commentForm.html.twig')->render($params);
             }
+
             if (!isset($_SESSION['role'])) {
                 $params['unAuthorize'] = true;
                 $params['errorMessage'] = 'Vous devez être connecté pour poster un commentaire.';
                 return $this->twig->load('comment/commentForm.html.twig')->render($params);
             }
+
             // Je soumet le formulaire pour ajouter un commentaire ici
             if  (!empty($_POST['content'])) {
                 $userId = $_SESSION['userId'];
@@ -61,6 +63,7 @@ class CommentController
                 // J'utilise le modèle pour ajouter le commentaire
                 $result = $this->commentModel->insertComment($postId, $userId, $content);
             }
+
             if ($result) {
                 $params['successMessage'] = 'Le commentaire a été ajouté avec succès.';
             } else {

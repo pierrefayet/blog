@@ -14,7 +14,7 @@ class User
         $this->db = $db;
     }
 
-    public function insertUser($username, $email, $password): bool
+    public function insertUser(string $username, string $email, string $password): bool
     {
         try {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -29,7 +29,7 @@ class User
         }
     }
 
-    public function modifyUser($email, $password): bool
+    public function modifyUser(string $email, string $password): bool
     {
         try {
             $stmt = $this->db->prepare('UPDATE user SET email = :email, password = :password WHERE id = :userId');
@@ -43,7 +43,7 @@ class User
         }
     }
 
-    public function checkUser($username, $password): ?array
+    public function checkUser(string $username, string $password): ?array
     {
         $stmt = $this->db->prepare('SELECT role, user_id, username, password FROM users WHERE username = :username');
         $stmt->bindParam(':username', $username);
@@ -56,7 +56,7 @@ class User
         return null;
     }
 
-    public function login($username, $password): bool
+    public function login(string $username, string $password): bool
     {
         $user = $this->checkUser($username, $password);
         if ($user) {
@@ -71,16 +71,4 @@ class User
         return false;
     }
 
-    public function getUsername(): array
-    {
-        try {
-            $stmt = $this->db->prepare("SELECT * FROM users WHERE username= :username");
-            $stmt->bindParam(':username', $username);
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la récupération du nom de l\'utilisateur : ' . $e->getMessage());
-            return [];
-        }
-    }
 }

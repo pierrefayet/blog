@@ -14,7 +14,7 @@ class Post
         $this->db = $db;
     }
 
-    public function insertPost($title, $content): bool
+    public function insertPost(string $title, string $content): bool
     {
         try {
             $stmt = $this->db->prepare('INSERT INTO posts (title, content, creation_date) VALUES (:title, :content, NOW())');
@@ -27,7 +27,7 @@ class Post
         }
     }
 
-    public function modifyPost($title, $content, $postId): bool
+    public function modifyPost(string $title, string $content, int $postId): bool
     {
         try {
             $stmt = $this->db->prepare('UPDATE posts SET title = :title, content = :content, creation_date = NOW() WHERE id = :postId');
@@ -53,7 +53,7 @@ class Post
         }
     }
 
-    public function getSinglePost($postId): array
+    public function getSinglePost(int $postId): array
     {
         try {
             $stmt = $this->db->prepare("SELECT * FROM posts WHERE id = :postId");
@@ -80,7 +80,7 @@ class Post
         }
     }
 
-    public function deletePost($postId): bool
+    public function deletePost(int $postId): bool
     {
         try {
             $stmt = $this->db->prepare('DELETE FROM posts WHERE id = :postId');

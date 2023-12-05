@@ -76,6 +76,6 @@ class UserController
         $_SESSION = [];
         session_destroy();
         header('Location: http://localhost:8080/src/index.php?method=home&controller=HomePageController');
-        exit();
+        return '';
     }
 }

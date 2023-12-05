@@ -30,11 +30,15 @@ class HomePageController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if($_POST['csrf'] !== hash('sha256', 'openclassroom')) {
+                $url = "/public/asset/cv/Cv_Pierre_Fayet.pdf";
+                $params['successMessage'] = 'Un probléme est survenu, veuillez contacter l\'administrateur.';
 
-                die();
+                return $this->twig->load('homePage.twig')->render(['post' => $this->postModel->getNewPosts(), 'cvUrl' => $url, 'hash' => hash('sha256', 'openclassroom')]);
             }
+
             $mailer = new Mailer();
             $mailer->send([]);
+
         }
 
         $url = "/public/asset/cv/Cv_Pierre_Fayet.pdf";

@@ -14,7 +14,7 @@ class Comment
         $this->db = $db;
     }
 
-    public function insertComment($postId, $userId, $content): bool
+    public function insertComment( int $postId, int $userId,string $content): bool
     {
         $stmt = $this->db->prepare('INSERT INTO comments (comment_post_id, comment_user_id, content, creation_date) VALUES (:postId, :userId, :content, NOW())');
         $stmt->bindParam(':postId', $postId);
@@ -23,14 +23,14 @@ class Comment
         return $stmt->execute();
     }
 
-    public function modifyStatusComment($commentId): bool
+    public function modifyStatusComment(int $commentId): bool
     {
             $stmt = $this->db->prepare('UPDATE comments SET is_approved = 1 WHERE id = :commentId');
             $stmt->bindParam(':commentId', $commentId);
             return $stmt->execute();
     }
 
-    public function deleteComment($commentId): bool
+    public function deleteComment(int $commentId): bool
     {
         try {
             $stmt = $this->db->prepare('DELETE FROM comments WHERE id = :commentId');
@@ -42,7 +42,7 @@ class Comment
         }
     }
 
-    public function getSingleComment($commentId): array
+    public function getSingleComment(int $commentId): array
     {
         try {
             $stmt = $this->db->prepare("SELECT * FROM comments WHERE id = :commentId");
@@ -56,7 +56,7 @@ class Comment
         }
     }
 
-    public function getPost($commentId): array
+    public function getPost(int $commentId): array
     {
         try {
             $stmt = $this->db->prepare("SELECT comment_post_id FROM comments WHERE id = :commentId");
