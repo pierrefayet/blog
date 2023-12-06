@@ -26,9 +26,15 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
 
 $_SESSION['last_activity'] = time();
 $twig->addGlobal('session', $_SESSION);
-$method = $_GET['method'];
-$requestedController = $_GET['controller'];
+$method = $_GET['method'] ?? 'default';
+$requestedController = $_GET['controller'] ?? 'NotfoundPageController';
 $controllerManager = new ControllerManager($pdo, $twig);
 $controller = $controllerManager->route($requestedController);
+if (!method_exists($controller, $method)) {
+    $controller = $controllerManager->route('NotfoundPageController');
+    $method = 'default';
+}
+
 $response = $controller->$method();
+
 echo $response;

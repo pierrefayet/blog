@@ -7,21 +7,22 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class AboutController
+class NotFoundPageController
 {
     private Environment $twig;
 
-    public function __construct(Environment $twig) {
+    function __construct(Environment $twig)
+    {
         $this->twig = $twig;
     }
 
     /**
-     * @throws SyntaxError
+     * @throws SyntaxError<<
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function about(): string
+    public function default(): string
     {
-        return $this->twig->load('about.twig')->render();
+        return $this->twig->load('notFoundPage.html.twig')->render();
     }
 }

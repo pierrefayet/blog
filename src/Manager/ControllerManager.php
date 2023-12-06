@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Controller\AboutController;
 use App\Controller\CommentController;
 use App\Controller\HomePageController;
+use App\Controller\NotFoundPageController;
 use App\Controller\PostController;
 use App\Controller\UserController;
 use App\Model\Comment;
@@ -53,6 +54,10 @@ class ControllerManager
         if ($requestedController === 'CommentController') {
             $model = new Comment($this->pdo);
             $controller = new CommentController($model, $this->twig);
+        }
+
+        if ($requestedController === 'NotfoundPageController') {
+            $controller = new NotFoundPageController($this->twig);
         }
 
         return $controller;

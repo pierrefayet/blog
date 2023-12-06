@@ -16,31 +16,21 @@ class User
 
     public function insertUser(string $username, string $email, string $password): bool
     {
-        try {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $this->db->prepare('INSERT INTO users (username, email, password, role) VALUES (:username,:email, :password, "user")');
             $stmt->bindParam(':username', $username);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $hashedPassword);
             return $stmt->execute();
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la modification d\'un utilisateur: ' . $e->getMessage());
-            return false;
-        }
     }
 
     public function modifyUser(string $email, string $password): bool
     {
-        try {
             $stmt = $this->db->prepare('UPDATE user SET email = :email, password = :password WHERE id = :userId');
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $password);
             $stmt->bindParam(':userId', $userId);
             return $stmt->execute();
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la modification d\'un utilisateur: ' . $e->getMessage());
-            return false;
-        }
     }
 
     public function checkUser(string $username, string $password): ?array

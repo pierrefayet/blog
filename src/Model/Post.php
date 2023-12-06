@@ -16,85 +16,53 @@ class Post
 
     public function insertPost(string $title, string $content): bool
     {
-        try {
             $stmt = $this->db->prepare('INSERT INTO posts (title, content, creation_date) VALUES (:title, :content, NOW())');
             $stmt->bindParam(':title', $title);
             $stmt->bindParam(':content', $content);
             return $stmt->execute();
-        } catch (PDOException $e) {
-            error_log('Erreur lors de l\'insertion d\'un post : ' . $e->getMessage());
-            return false;
-        }
     }
 
     public function modifyPost(string $title, string $content, int $postId): bool
     {
-        try {
             $stmt = $this->db->prepare('UPDATE posts SET title = :title, content = :content, creation_date = NOW() WHERE id = :postId');
             $stmt->bindParam(':title', $title);
             $stmt->bindParam(':content', $content);
             $stmt->bindParam(':postId', $postId);
             return $stmt->execute();
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la modification d\'un post : ' . $e->getMessage());
-            return false;
-        }
     }
 
     public function getAllPosts(): array
     {
-        try {
             $stmt = $this->db->prepare("SELECT * FROM posts");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la récupération des posts : ' . $e->getMessage());
-            return [];
-        }
     }
 
     public function getSinglePost(int $postId): array
     {
-        try {
             $stmt = $this->db->prepare("SELECT * FROM posts WHERE id = :postId");
             $stmt->bindParam(':postId', $postId);
             $stmt->execute();
             $post= $stmt->fetch(PDO::FETCH_ASSOC);
             return $post;
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la récupération du post : ' . $e->getMessage());
-            return [];
-        }
     }
 
     public function getNewPosts(): array
     {
-        try {
             $db = "SELECT * FROM posts ORDER BY creation_date DESC LIMIT 2";
             $stmt = $this->db->query($db);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $exception) {
-            error_log('Erreur lors de la récupération des posts : ' . $exception->getMessage());
-            return [];
-        }
     }
 
     public function deletePost(int $postId): bool
     {
-        try {
             $stmt = $this->db->prepare('DELETE FROM posts WHERE id = :postId');
             $stmt->bindParam(':postId', $postId);
             return $stmt->execute();
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la suppression du post : ' . $e->getMessage());
-            return false;
-        }
     }
 
     public function getAllComments(int $postId): array
     {
-        try {
             $stmt = $this->db->prepare(
                 "SELECT comments.content, comments.creation_date, users.username
                        FROM comments
@@ -104,21 +72,12 @@ class Post
             $stmt->execute();
             $allComment = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $allComment;
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la récupération des commentaires : ' . $e->getMessage());
-            return [];
-        }
     }
 
     public function deleteAllComment(int $commentId): bool
     {
-        try {
             $stmt = $this->db->prepare('DELETE FROM comments WHERE id = :commentId');
             $stmt->bindParam(':commentId', $commentId);
             return $stmt->execute();
-        } catch (PDOException $e) {
-            error_log('Erreur lors de la suppression du post : ' . $e->getMessage());
-            return false;
-        }
     }
 }

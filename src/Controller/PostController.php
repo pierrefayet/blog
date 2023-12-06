@@ -60,26 +60,22 @@ class PostController
 
     public function update(): string
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $title = $_POST['title'];
-            $content = $_POST['content'];
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $postId = $_GET['postId'];
-
-
-            $result = $this->postModel->modifyPost($title, $content, $postId);
-            if ($result) {
-                $params['successMessage'] = 'L\'article a été mis à jour avec succès.';
-                $posts = $this->postModel->getAllPosts();
-                return $this->twig->load('post/listing.twig')->render(['posts' => $posts, 'params' => $params]);
-
-            } else {
-                $params['errorMessage'] = 'Une erreur est survenue lors de la mise à jour de l\'article.';
-                return $this->twig->load('post/updatePost.twig')->render(['post' => $this->postModel->getSinglePost($postId)]);
-
-            }
+            return $this->twig->load('post/updatePost.twig')->render(['post' => $this->postModel->getSinglePost($postId)]);
         }
 
+        $title = $_POST['title'];
+        $content = $_POST['content'];
         $postId = $_GET['postId'];
+        $result = $this->postModel->modifyPost($title, $content, $postId);
+        if ($result) {
+            $params['successMessage'] = 'L\'article a été mis à jour avec succès.';
+            $posts = $this->postModel->getAllPosts();
+            return $this->twig->load('post/listing.twig')->render(['posts' => $posts, 'params' => $params]);
+        }
+
+        $params['errorMessage'] = 'Une erreur est survenue lors de la mise à jour de l\'article.';
         return $this->twig->load('post/updatePost.twig')->render(['post' => $this->postModel->getSinglePost($postId)]);
     }
 
