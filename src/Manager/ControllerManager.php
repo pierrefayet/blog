@@ -58,3 +58,4 @@ class ControllerManager
         return $controller;
     }
 }
+
