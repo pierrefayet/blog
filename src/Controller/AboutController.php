@@ -2,22 +2,20 @@
 
 namespace App\Controller;
 
-use App\Model\Post;
+use AllowDynamicProperties;
+use PDO;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class AboutController
+#[AllowDynamicProperties] class AboutController
 {
     private Environment $twig;
-    private Post $postModel;
-    public function __construct(Post $postModel, Environment $twig) {
+    public function __construct(PDO $pdo, Environment $twig) {
         $this->twig = $twig;
-        // $this->postModel = $postModel; // Uncomment when needed
-
+        $this->pdo = $pdo;
     }
-
 
     /**
      * @throws SyntaxError
@@ -26,6 +24,6 @@ class AboutController
      */
     public function about(): string
     {
-        return $this->twig->load('about.twig')->render();
+        return $this->twig->load('about.twig')->render([]);
     }
 }
