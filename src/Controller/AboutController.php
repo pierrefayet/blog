@@ -9,12 +9,11 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-#[AllowDynamicProperties] class AboutController
+class AboutController
 {
     private Environment $twig;
-    public function __construct(PDO $pdo, Environment $twig) {
+    public function __construct(Environment $twig) {
         $this->twig = $twig;
-        $this->pdo = $pdo;
     }
 
     /**

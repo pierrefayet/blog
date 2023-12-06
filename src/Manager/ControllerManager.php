@@ -37,8 +37,7 @@ class ControllerManager
         }
 
         if ($requestedController === 'AboutController') {
-            $model = new Post($this->pdo);
-            $controller = new AboutController($model, $this->twig);
+            $controller = new AboutController($this->twig);
         }
 
         if ($requestedController === 'PostController') {
