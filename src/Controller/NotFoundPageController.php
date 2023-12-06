@@ -11,7 +11,7 @@ class NotFoundPageController
 {
     private Environment $twig;
 
-    function __construct(Environment $twig)
+    public function __construct(Environment $twig)
     {
         $this->twig = $twig;
     }
