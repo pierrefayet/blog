@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\Comment;
 use App\Model\Post;
+use App\service\Security;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -65,27 +66,49 @@ class PostController
 
     public function update(): string
     {
+        $postId = $_GET['postId'];
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $postId = $_GET['postId'];
             return $this->twig->load('post/updatePost.twig')->render([
                 'post' => $this->postModel->getSinglePost($postId)
             ]);
         }
 
+        if (!Security::checkCsrf($_POST)) {
+            $params['errorMessage'] = 'Le token CSRF est invalide.';
+            return $this->twig->load('post/updatePost.twig')->render([
+                'post' => $this->postModel->getSinglePost($postId),
+                'params' => $params
+            ]);
+        }
+
+
+        $errors = checkForm(["title" => "str", "intro" => "str", "id" => "int"], $_POST);
+        if (!$errors) {
+            // TODO: Save entity
+            // return;
+        }
+
+        // return $this->twig->load('post/listing.twig')->render(['errors' => $errors]);
+
+
         $title = $_POST['title'];
         $intro = $_POST['intro'];
         $content = $_POST['content'];
         $author = $_POST['author'];
-        $postId = $_GET['postId'];
         $result = $this->postModel->modifyPost($title, $intro,  $content, $postId, $author);
         if ($result) {
             $params['successMessage'] = 'L\'article a été mis à jour avec succès.';
             $posts = $this->postModel->getAllPosts();
             return $this->twig->load('post/listing.twig')->render(['posts' => $posts, 'params' => $params]);
+        } else {
+            $params['errorMessage'] = 'Une erreur est survenue lors de la mise à jour de l\'article.';
         }
 
-        $params['errorMessage'] = 'Une erreur est survenue lors de la mise à jour de l\'article.';
-        return $this->twig->load('post/updatePost.twig')->render(['post' => $this->postModel->getSinglePost($postId)]);
+        return $this->twig->load('post/updatePost.twig')->render([
+            'post' => $this->postModel->getSinglePost($postId),
+            'params' => $params
+        ]);
     }
 
     public function deletePost(): string
