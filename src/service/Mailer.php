@@ -17,7 +17,7 @@ class Mailer
     /**
      * @throws Exception
      */
-    public function send($from_name, $from_email, $subject, $message): bool
+    public function send(string $from_name, string $from_email, string $subject, string $message): bool
     {
         $this->mailer->SMTPDebug = 0;
         $this->mailer->isSMTP();

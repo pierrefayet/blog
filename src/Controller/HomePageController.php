@@ -51,7 +51,10 @@ class HomePageController
             $this->mailer->send($from_name, $from_email, $subject, $message);
             if ($this->mailer->send($from_name, $from_email, $subject, $message)) {
                 $params['successMessage'] = 'Un probléme est survenu, veuillez contacter l\'administrateur.';
-                return false;
+                return $this->twig->load('homePage.twig')->render([
+                    'post' => $this->postModel->getNewPosts(),
+                    'cvUrl' => $url,
+                    'hash' => hash('sha256', 'openclassroom')]);
             }
         }
 
