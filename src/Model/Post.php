@@ -27,7 +27,7 @@ class Post
         return $stmt->execute();
     }
 
-    public function modifyPost(string $title, string $intro, string $content, int $postId , $author): bool
+    public function modifyPost(string $title, string $intro, string $content, int $postId , string $author): bool
     {
         $stmt = $this->db->prepare(
             'UPDATE posts SET title = :title, intro = :intro, content = :content, creation_date = NOW(), author = :author
