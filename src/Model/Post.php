@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use PDO;
-use PDOException;
 
 class Post
 {
@@ -14,27 +13,31 @@ class Post
         $this->db = $db;
     }
 
-    public function insertPost(string $title, string $content): bool
+    public function insertPost(string $title, string$intro, string $content, string $author): bool
     {
         $stmt = $this->db->prepare(
-            'INSERT INTO posts (title, content, creation_date) 
-                                           VALUES (:title, :content, NOW())
+            'INSERT INTO posts (title, intro, content, creation_date, author) 
+                                           VALUES (:title, :intro, :content, NOW(), :author)
                                        ');
 
         $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':intro', $intro);
         $stmt->bindParam(':content', $content);
+        $stmt->bindParam(':author', $author);
         return $stmt->execute();
     }
 
-    public function modifyPost(string $title, string $content, int $postId): bool
+    public function modifyPost(string $title, string $intro, string $content, int $postId , $author): bool
     {
         $stmt = $this->db->prepare(
-            'UPDATE posts SET title = :title, content = :content, creation_date = NOW() 
+            'UPDATE posts SET title = :title, intro = :intro, content = :content, creation_date = NOW(), author = :author
                        WHERE id = :postId
             ');
 
         $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':intro', $intro);
         $stmt->bindParam(':content', $content);
+        $stmt->bindParam(':author', $author);
         $stmt->bindParam(':postId', $postId);
         return $stmt->execute();
     }
@@ -48,7 +51,7 @@ class Post
 
     public function getSinglePost(int $postId): array
     {
-        $stmt = $this->db->prepare("SELECT * FROM posts WHERE id = :postId");
+        $stmt = $this->db->prepare("SELECT * FROM posts WHERE id = :postId ORDER BY creation_date DESC");
         $stmt->bindParam(':postId', $postId);
         $stmt->execute();
         $post = $stmt->fetch(PDO::FETCH_ASSOC);

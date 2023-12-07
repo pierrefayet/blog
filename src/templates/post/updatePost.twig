@@ -14,8 +14,16 @@
                 <textarea class="form-control" id="title" name="title">{{ post.title }}</textarea>
             </div>
             <div class="form-group">
+                <label for="intro">Chapô</label>
+                <textarea class="form-control" id="intro" name="intro">{{ post.intro }}</textarea>
+            </div>
+            <div class="form-group">
                 <label for="content">Contenu de l'article :</label>
                 <textarea class="form-control" id="content" name="content">{{ post.content }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="author">Auteur</label>
+                <textarea class="form-control" id="author" name="author">{{ post.author }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
         </form>

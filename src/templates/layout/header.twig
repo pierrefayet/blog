@@ -12,15 +12,18 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                                                href="index.php?method=home&controller=HomePageController">Home</a></li>
+                                                href="index.php?method=home&controller=HomePageController">Home</a>
+                        </li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                                                href="index.php?method=index&controller=PostController">Listing</a></li>
+                                                href="index.php?method=index&controller=PostController">Articles</a>
+                        </li>
                         {% if session['role'] is defined and session['role'] == "admin" %}
                             <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                                                     href="index.php?method=addPost&controller=PostController">Ajout d'un
                                     article</a></li>
                             <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                                                    href="index.php?method=indexComment&controller=CommentController">Modération</a>
+                                                    href="index.php?method=indexComment&controller=CommentController">
+                                    Modération</a>
                             </li>
                         {% endif %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
@@ -29,14 +32,17 @@
                         </li>
                         {% if session['role'] is defined %}
                             <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                                                    href=index.php?method=logout&controller=UserController>Déconnexion</a>
+                                                    href=index.php?method=logout&controller=UserController>
+                                    Déconnexion</a>
                             </li>
                             <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                                                    href="index.php?method=login&controller=UserController">Bienvenue {{ session['username'] }}</a>
+                                                    href="index.php?method=login&controller=UserController">Bienvenue
+                                    {{ session['username'] }}</a>
                             </li>
                         {% else %}
                             <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                                                    href="index.php?method=login&controller=UserController">Connexion</a>
+                                                    href="index.php?method=login&controller=UserController">
+                                    Connexion</a>
                             </li>
                         {% endif %}
                     </ul>
@@ -47,7 +53,8 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1 class="fs-1 fs-lg-2 text-md-left my-4 title-heading">Quand rigueur logistique rencontre passion du
+                        <h1 class="fs-1 fs-lg-2 text-md-left my-4 title-heading">Quand rigueur logistique rencontre
+                            passion du
                             développement PHP</h1>
                         <span class="subheading"></span>
                     </div>

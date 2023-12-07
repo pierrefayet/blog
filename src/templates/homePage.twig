@@ -2,23 +2,7 @@
 {% block content %}
     <div class="container mt-5 mb-5">
         <h2 class="mt-5 mb-5 text-center">Bienvenue dans mon blog sur l'univers php</h2>
-        <h3>Dernière actualité:</h3>
-        <div class="row mt-4">
-            {% for posts in post %}
-                <div class="col-md-6 mb-4">
-                    <div class="card custom-card">
-                        <div class="card-body text-center">
-                            <a href="index.php?method=show&controller=PostController&postId={{ posts.id }}"><h2
-                                        class="card-title text-black-70 text-center">{{ posts.title }}</h2></a>
-                            <a href="index.php?method=show&controller=PostController&postId={{ posts.id }}"><p
-                                        class="card-text text-black-60">{{ posts.content }}</p></a>
-                            <a class="" href="index.php?method=show&controller=PostController&postId={{ posts.id }}"><p
-                                        class="card-text text-black-50">Afficher plus...</p></a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+        <h3>Pour me contacter :</h3>
     </div>
     <div id="central-point"></div>
     <form method="post" class="mb-5">

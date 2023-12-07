@@ -13,7 +13,6 @@ use App\Model\User;
 use App\Model\Post;
 use App\service\Mailer;
 use PDO;
-use PHPMailer\PHPMailer\PHPMailer;
 use Twig\Environment;
 
 class ControllerManager
@@ -59,6 +58,10 @@ class ControllerManager
         }
 
         if ($requestedController === 'NotfoundPageController') {
+            $controller = new NotFoundPageController($this->twig);
+        }
+
+        if (!isset($controller)) {
             $controller = new NotFoundPageController($this->twig);
         }
 

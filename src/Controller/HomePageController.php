@@ -38,7 +38,7 @@ class HomePageController
                 $params['successMessage'] = 'Un probléme est survenu, veuillez contacter l\'administrateur.';
 
                 return $this->twig->load('homePage.twig')->render([
-                    $params, 'post' => $this->postModel->getNewPosts(),
+                    $params,
                     'cvUrl' => $url,
                     'hash' => hash('sha256', 'openclassroom')
                 ]);
@@ -52,14 +52,12 @@ class HomePageController
             if ($this->mailer->send($from_name, $from_email, $subject, $message)) {
                 $params['successMessage'] = 'Un probléme est survenu, veuillez contacter l\'administrateur.';
                 return $this->twig->load('homePage.twig')->render([
-                    'post' => $this->postModel->getNewPosts(),
                     'cvUrl' => $url,
                     'hash' => hash('sha256', 'openclassroom')]);
             }
         }
 
         return $this->twig->load('homePage.twig')->render([
-            'post' => $this->postModel->getNewPosts(),
             'cvUrl' => $url,
             'hash' => hash('sha256', 'openclassroom')]);
     }

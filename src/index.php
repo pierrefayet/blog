@@ -2,7 +2,6 @@
 
 use App\config\DbConnect;
 use App\Manager\ControllerManager;
-use App\service\Mailer;
 use Tracy\Debugger;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;

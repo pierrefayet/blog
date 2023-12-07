@@ -14,8 +14,10 @@
                 <div class="card custom-card">
                     <div class="card-body">
                         <h2 class="card-title text-black-70 text-center">{{ post.title }}</h2>
-                        <p class="card-text text-black-60">{{ post.content }}</p>
-                        <a href="index.php?method=show&controller=PostController&postId={{ post.id }}">Afficher plus...</a>
+                        <p class="card-text text-black-60">{{ post.intro}}</p>
+                        <p class="card-text text-black-60">{{ post.creation_date }}</p>
+                        <a href="index.php?method=show&controller=PostController&postId={{ post.id }}">
+                            Afficher plus...</a>
                     </div>
                 </div>
             </div>

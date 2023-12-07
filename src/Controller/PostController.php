@@ -47,10 +47,12 @@ class PostController
             // Je soumet le formulaire pour ajouter un post ici
             if (isset($_POST['title']) && isset($_POST['content'])) {
                 $title = $_POST['title'];
+                $intro = $_POST['intro'];
                 $content = $_POST['content'];
+                $author = $_POST['author'];
             }
             // J'utilise le modèle pour ajouter le post
-            $result = $this->postModel->insertPost($title, $content);
+            $result = $this->postModel->insertPost($title, $intro, $content, $author);
             if ($result) {
                 $params ['successMessage'] = 'L\'article a été ajouté avec succès.';
             } else {
@@ -71,9 +73,11 @@ class PostController
         }
 
         $title = $_POST['title'];
+        $intro = $_POST['intro'];
         $content = $_POST['content'];
+        $author = $_POST['author'];
         $postId = $_GET['postId'];
-        $result = $this->postModel->modifyPost($title, $content, $postId);
+        $result = $this->postModel->modifyPost($title, $intro,  $content, $postId, $author);
         if ($result) {
             $params['successMessage'] = 'L\'article a été mis à jour avec succès.';
             $posts = $this->postModel->getAllPosts();
