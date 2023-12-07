@@ -8,12 +8,10 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-
 class CommentController
 {
     private Environment $twig;
     private Comment $commentModel;
-
 
     public function __construct(Comment $commentModel, Environment $twig)
     {
@@ -29,7 +27,9 @@ class CommentController
     public function show(): string
     {
         $postId = $_GET['postId'];
-        return($this->twig->load('comment/commentForm.html.twig')->render(['post' => $this->commentModel->getSingleComment($postId)]));
+        return($this->twig->load('comment/commentForm.html.twig')->render([
+            'post' => $this->commentModel->getSingleComment($postId)
+        ]));
     }
 
     public function indexComment(): string
@@ -44,7 +44,7 @@ class CommentController
         $params = [];
         $postId = $_GET['postId'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if($_POST['csrf'] !== hash('sha256', 'openclassroom')) {
+            if ($_POST['csrf'] !== hash('sha256', 'openclassroom')) {
                 $params['successMessage'] = 'Un probléme est survenu, veuillez contacter l\'administrateur.';
                 return $this->twig->load('comment/commentForm.html.twig')->render($params);
             }
@@ -56,7 +56,7 @@ class CommentController
             }
 
             // Je soumet le formulaire pour ajouter un commentaire ici
-            if  (!empty($_POST['content'])) {
+            if (!empty($_POST['content'])) {
                 $userId = $_SESSION['userId'];
                 $content = $_POST['content'];
 
@@ -71,7 +71,10 @@ class CommentController
             }
         }
         // J'affiche le formulaire d'ajout du commentaire
-        return $this->twig->load('comment/commentForm.html.twig')->render([$params, 'hash' => hash('sha256', 'openclassroom')]);
+        return $this->twig->load('comment/commentForm.html.twig')->render([
+            $params,
+            'hash' => hash('sha256', 'openclassroom')
+        ]);
     }
 
     public function handlerDeleteComment(): string
@@ -85,7 +88,9 @@ class CommentController
                     $params['successMessage'] = 'Le statut du commentaire a été modifié avec succès.';
                     return $this->indexComment();
                 } else {
-                    $params['errorMessage'] = 'Une erreur est survenue lors de la modification du statut du commentaire.';
+                    $params['errorMessage'] = '
+                    Une erreur est survenue lors de la modification du statut du commentaire.
+                    ';
                 }
             }
         }
@@ -105,7 +110,9 @@ class CommentController
                     $params['successMessage'] = 'Le statut du commentaire a été modifié avec succès.';
                     return $this->indexComment();
                 } else {
-                    $params['errorMessage'] = 'Une erreur est survenue lors de la modification du statut du commentaire.';
+                    $params['errorMessage'] = '
+                    Une erreur est survenue lors de la modification du statut du commentaire.
+                    ';
                 }
             }
         }

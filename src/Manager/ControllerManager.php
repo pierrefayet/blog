@@ -11,6 +11,7 @@ use App\Controller\UserController;
 use App\Model\Comment;
 use App\Model\User;
 use App\Model\Post;
+use App\service\Mailer;
 use PDO;
 use PHPMailer\PHPMailer\PHPMailer;
 use Twig\Environment;
@@ -30,11 +31,12 @@ class ControllerManager
         $this->twig = $twig;
     }
 
-    public function route( string $requestedController): object
+    public function route(string $requestedController): object
     {
         if ($requestedController === 'HomePageController') {
+            $mailer = new Mailer();
             $model = new Post($this->pdo);
-            $controller = new HomePageController($model, $this->twig);
+            $controller = new HomePageController($mailer, $model, $this->twig);
         }
 
         if ($requestedController === 'AboutController') {

@@ -10,8 +10,8 @@ use Twig\Error\SyntaxError;
 class AboutController
 {
     private Environment $twig;
-
-    public function __construct(Environment $twig) {
+    public function __construct(Environment $twig)
+    {
         $this->twig = $twig;
     }
 

@@ -1,12 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&display=swap");
 
+.masthead {
+    height: 50px;
+}
+
 footer {
     background: rgb(63 184 251);
     background: linear-gradient(90deg, rgba(63 184 251 / 100%), rgba(70 239 252 / 100%));
 }
 
+.title-heading {
+    color: white;
+}
+
 h2, h3 {
     color: #333;
+    font-family: "Comic Neue", cursive;
 }
 
 .custom-card {
@@ -94,11 +103,6 @@ h2, h3 {
 .wrapper .window_group .window_404 .stars .star18 { width: 3px; height: 3px; right: 55%; top: 79%; animation: twinkle 2.5s linear infinite;}
 .wrapper .window_group .window_404 .stars .star19 { width: 3px; height: 3px; right: 55%; top: 55%; animation: twinkle 2.5s linear infinite;}
 .wrapper .window_group .window_404 .stars .star20 { width: 3px; height: 3px; right: 66%; top: 90%; animation: twinkle 2.5s linear infinite;}
-
-@keyframes twinkle {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
 
 @media only screen and (min-width: 1080px) {
     .wrapper {

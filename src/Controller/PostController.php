@@ -28,7 +28,10 @@ class PostController
     public function show(): string
     {
         $postId = $_GET['postId'];
-        return ($this->twig->load('post/show.html.twig')->render(['post' => $this->postModel->getSinglePost($postId), 'commentsByPost' => $this->postModel->getAllComments($postId)]));
+        return ($this->twig->load('post/show.html.twig')->render([
+            'post' => $this->postModel->getSinglePost($postId),
+            'commentsByPost' => $this->postModel->getAllComments($postId)
+        ]));
     }
 
     public function index(): string
@@ -62,7 +65,9 @@ class PostController
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $postId = $_GET['postId'];
-            return $this->twig->load('post/updatePost.twig')->render(['post' => $this->postModel->getSinglePost($postId)]);
+            return $this->twig->load('post/updatePost.twig')->render([
+                'post' => $this->postModel->getSinglePost($postId)
+            ]);
         }
 
         $title = $_POST['title'];
@@ -87,8 +92,6 @@ class PostController
             $this->postModel->deletePost($postId);
         }
 
-
         return $this->twig->load('post/listing.twig')->render(['posts' => $this->postModel->getAllPosts()]);
     }
-
 }

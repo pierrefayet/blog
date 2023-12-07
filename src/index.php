@@ -2,6 +2,7 @@
 
 use App\config\DbConnect;
 use App\Manager\ControllerManager;
+use App\service\Mailer;
 use Tracy\Debugger;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
@@ -11,7 +12,6 @@ require_once '../vendor/autoload.php';
 Debugger::enable();
 $dbConnect = new DbConnect('localhost', 'blog', 'nareendel', 'Aa19071985.');
 $pdo = $dbConnect->getDb();
-
 $loader = new FilesystemLoader('templates/');
 $twig = new Environment($loader, ['debug' => true, 'strict_variables' => true]);
 $twig->addExtension(new DebugExtension());

@@ -1,13 +1,10 @@
 <?php
-//Import PHPMailer classes into the global namespace
-//These must be at the top of your script, not inside a function
+
 namespace App\service;
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-//Create an instance; passing `true` enables exceptions
 class Mailer
 {
     private PHPMailer $mailer;
@@ -17,17 +14,26 @@ class Mailer
         $this->mailer = new PHPMailer();
     }
 
-    public function send( string $data): void
+    /**
+     * @throws Exception
+     */
+    public function send($from_name, $from_email, $subject, $message): bool
     {
-        try {
-            $this->mailer->setFrom('piero69450@gmail.com', 'Mailer');
-            $this->mailer->addAddress('piero69450@gmail.com', 'Piero');
-            $this->mailer->isHTML(true);
-            $this->mailer->Subject = 'Contact blog';
-            $this->mailer->Body = 'This is the HTML message body <b>in bold!</b>';
-            $this->mailer->send();
-        } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$this->mailer->ErrorInfo}";
-        }
+        $this->mailer->SMTPDebug = 0;
+        $this->mailer->isSMTP();
+        $this->mailer->Host = 'smtp.gmail.com';
+        $this->mailer->SMTPAuth = true;
+        $this->mailer->Username = 'piero69450@gmail.com';
+        $this->mailer->Password = 'wtuf dzge nyej ahzn';
+        $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $this->mailer->Port = 465;
+        $this->mailer->setFrom($from_email, $from_name);
+        $this->mailer->addAddress('piero69450@gmail.com', 'contact@gmail.com');
+        $this->mailer->isHTML(true);
+        $this->mailer->Subject = $subject;
+        $this->mailer->Body = $message;
+        $this->mailer->send();
+
+        return true;
     }
 }

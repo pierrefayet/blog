@@ -17,7 +17,7 @@ class UserController
     public function __construct(User $model, Environment $twig)
     {
         $this->twig = $twig;
-        $this->model= $model;
+        $this->model = $model;
     }
 
     /**
@@ -35,10 +35,8 @@ class UserController
                 $email = $_POST['email'];
                 $password = $_POST['password'];
             }
-
             $resultSqlUser = $this->model->insertUser($username, $email, $password);
             if ($resultSqlUser && $this->model->login($username, $password)) {
-
                 return '';
             } else {
                 $params['errorMessage'] = 'Une erreur est survenue lors de l\'ajout de l\'utilisateur.';
@@ -58,11 +56,11 @@ class UserController
                 $password = $_POST['password'];
 
                 if (!$this->model->login($username, $password)) {
-                     $params['errorMessage'] = 'Échec de connexion, si vous n\'avez pas de compre veuillez vous inscrire, sinon veuillez réessayer.';
+                     $params['errorMessage'] = '
+                     Échec de connexion, si vous n\'avez pas de compre veuillez vous inscrire, sinon veuillez réessayer.
+                     ';
                 } else {
-
                     return '';
-
                 }
             }
         }
