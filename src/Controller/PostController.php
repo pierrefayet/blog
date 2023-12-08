@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Model\Comment;
 use App\Model\Post;
 use App\service\Security;
+use App\service\SecurityCsrf;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -74,23 +75,13 @@ class PostController
             ]);
         }
 
-        if (!Security::checkCsrf($_POST)) {
+        if (!SecurityCsrf::check($_POST)) {
             $params['errorMessage'] = 'Le token CSRF est invalide.';
             return $this->twig->load('post/updatePost.twig')->render([
                 'post' => $this->postModel->getSinglePost($postId),
                 'params' => $params
             ]);
         }
-
-
-        $errors = checkForm(["title" => "str", "intro" => "str", "id" => "int"], $_POST);
-        if (!$errors) {
-            // TODO: Save entity
-            // return;
-        }
-
-        // return $this->twig->load('post/listing.twig')->render(['errors' => $errors]);
-
 
         $title = $_POST['title'];
         $intro = $_POST['intro'];

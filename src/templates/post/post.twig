@@ -20,6 +20,7 @@
                 <label for="author">Auteur</label>
                 <input type="text" class="form-control" id="author" name="author" required>
             </div>
+            <input type="hidden" value="{{ csrf_token }}" name="csrf">
             <button type="submit" class="btn btn-primary mt-4 mb-4">Ajouter</button>
         </form>
     </div>

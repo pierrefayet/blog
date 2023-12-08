@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Model\User;
-use PDO;
+use App\service\SecurityCsrf;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -30,9 +30,7 @@ class UserController
         $template = $this->twig->load('security/registerUserPage.twig');
         $params = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            // TODO: Ecrire une fonction permettant de vérifier que le token CSRF est présent ET valide
-            // TODO : check_csrf($_POST); ==> function check_csrf($data) ... SI invalide : throw Exception("Invalid CSRF Token");
+            SecurityCsrf::check($_POST);
             if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
                 $username = $_POST['username'];
                 $email = $_POST['email'];

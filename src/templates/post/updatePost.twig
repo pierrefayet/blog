@@ -25,7 +25,7 @@
                 <label for="author">Auteur</label>
                 <textarea class="form-control" id="author" name="author">{{ post.author }}</textarea>
             </div>
-            <input type="hidden" name="csrf_token" value="{{ crsf_token }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
             <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
         </form>
     </div>

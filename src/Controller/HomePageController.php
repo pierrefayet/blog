@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\Post;
 use App\service\Mailer;
+use App\service\SecurityCsrf;
 use PHPMailer\PHPMailer\Exception;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -32,33 +33,28 @@ class HomePageController
      */
     public function home(): string
     {
+        $params = [];
         $url = "/public/asset/cv/Cv_Pierre_Fayet.pdf";
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if ($_POST['csrf'] !== hash('sha256', 'openclassroom')) {
-                $params['successMessage'] = 'Un probléme est survenu, veuillez contacter l\'administrateur.';
-
-                return $this->twig->load('homePage.twig')->render([
-                    $params,
-                    'cvUrl' => $url,
-                    'hash' => hash('sha256', 'openclassroom')
-                ]);
-            }
-
-            $from_name = $_POST['name'];
-            $from_email = $_POST['email'];
-            $subject = $_POST['subject'];
-            $message = $_POST['message'];
-            $this->mailer->send($from_name, $from_email, $subject, $message);
-            if ($this->mailer->send($from_name, $from_email, $subject, $message)) {
-                $params['successMessage'] = 'Un probléme est survenu, veuillez contacter l\'administrateur.';
-                return $this->twig->load('homePage.twig')->render([
-                    'cvUrl' => $url,
-                    'hash' => hash('sha256', 'openclassroom')]);
-            }
+            SecurityCsrf::check($_POST);
+            return $this->twig->load('homePage.twig')->render([
+                'cvUrl' => $url
+            ]);
         }
 
+        $from_name = $_POST['name'];
+        $from_email = $_POST['email'];
+        $subject = $_POST['subject'];
+        $message = $_POST['message'];
+        $this->mailer->send($from_name, $from_email, $subject, $message);
+        if ($this->mailer->send($from_name, $from_email, $subject, $message)) {
+            $params['successMessage'] = 'Un probléme est survenu, veuillez contacter l\'administrateur.';
+            return $this->twig->load('homePage.twig')->render([
+                'cvUrl' => $url, $params
+            ]);
+        }
         return $this->twig->load('homePage.twig')->render([
-            'cvUrl' => $url,
-            'hash' => hash('sha256', 'openclassroom')]);
+            'cvUrl' => $url, $params
+        ]);
     }
 }

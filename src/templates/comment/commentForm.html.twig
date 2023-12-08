@@ -14,12 +14,11 @@
             </div>
             <div class="mt-3">
                 {% if comment is defined %}
-                    <input type="hidden" value="{{ hash }}" name="csrf">
                     <input type="submit" class="btn btn-primary" value="Modifier">
                     <a href="index.php?method=deleteComment&controller=commentController&postId={{ comment.id }}"
                        class="btn btn-outline-danger mb">Supprimer</a>
                 {% else %}
-                    <input type="hidden" value="{{ hash }}" name="csrf">
+                    <input type="hidden" value="{{ csrf_token }}" name="csrf">
                     <input type="submit" class="btn btn-primary" value="Ajouter" />
                 {% endif %}
             </div>

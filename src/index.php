@@ -15,7 +15,7 @@ $loader = new FilesystemLoader('templates/');
 $twig = new Environment($loader, ['debug' => true, 'strict_variables' => true]);
 $twig->addExtension(new DebugExtension());
 session_start();
-
+$_SESSION['csrf'] = hash('sha256', uniqid());
 $_SESSION['logged'] = isset($_SESSION['logged']);
 $maxInactiveTime = 1800;
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $maxInactiveTime)) {
@@ -25,10 +25,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
 
 $_SESSION['last_activity'] = time();
 $twig->addGlobal('session', $_SESSION);
-
-// csrf_token
-// addGlobal twig set CSRF token
-
+$twig->addGlobal('csrf_token', $_SESSION);
 $method = $_GET['method'] ?? 'default';
 $requestedController = $_GET['controller'] ?? 'NotfoundPageController';
 $controllerManager = new ControllerManager($pdo, $twig);
