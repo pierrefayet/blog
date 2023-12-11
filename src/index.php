@@ -7,6 +7,8 @@ use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
+
+//header("Content-Security-Policy: default-src 'self'; style-src 'sha256-UgnL11z+SR8dKzcxIq4hE3ae7TCz4bDUqxj5DkO5hnw=' 'sha256-bo/xnuHMJnX4ybzTCeW3ntUlXYFVxSLkHuF6EPB4u8M=';");
 require_once '../vendor/autoload.php';
 Debugger::enable();
 $dbConnect = new DbConnect('localhost', 'blog', 'nareendel', 'Aa19071985.');
@@ -15,7 +17,11 @@ $loader = new FilesystemLoader('templates/');
 $twig = new Environment($loader, ['debug' => true, 'strict_variables' => true]);
 $twig->addExtension(new DebugExtension());
 session_start();
-$_SESSION['csrf'] = hash('sha256', uniqid());
+
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = hash('sha256', uniqid());
+}
+
 $_SESSION['logged'] = isset($_SESSION['logged']);
 $maxInactiveTime = 1800;
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $maxInactiveTime)) {
@@ -25,7 +31,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
 
 $_SESSION['last_activity'] = time();
 $twig->addGlobal('session', $_SESSION);
-$twig->addGlobal('csrf_token', $_SESSION);
+$twig->addGlobal('csrf_token', $_SESSION['csrf_token']);
 $method = $_GET['method'] ?? 'default';
 $requestedController = $_GET['controller'] ?? 'NotfoundPageController';
 $controllerManager = new ControllerManager($pdo, $twig);

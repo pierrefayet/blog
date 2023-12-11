@@ -1,6 +1,14 @@
 {% extends 'layout/layout.twig' %}
-
 {% block content %}
+    {% if params.errorMessage is defined %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ params.errorMessage }}
+        </div>
+    {% elseif errorMessage is defined %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ errorMessage }}
+        </div>
+    {% endif %}
     <div class="container">
         <h1>Commentaire</h1>
         {% if unAuthorize is not defined or false == unAuthorize  %}
@@ -12,7 +20,7 @@
                         {{ comment.content }}
                     {% endif %}</textarea>
             </div>
-            <div class="mt-3">
+            <div class="mt-2 mb-2">
                 {% if comment is defined %}
                     <input type="submit" class="btn btn-primary" value="Modifier">
                     <a href="index.php?method=deleteComment&controller=commentController&postId={{ comment.id }}"

@@ -1,8 +1,17 @@
 {% extends 'layout/layout.twig' %}
 {% block content %}
+    {% if params.errorMessage is defined %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ params.errorMessage }}
+        </div>
+    {% elseif errorMessage is defined %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ errorMessage }}
+        </div>
+    {% endif %}
     <h2 class="text-center">Modification du profil</h2>
     <div class="container">
-        <form method="POST">
+        <form  class="mt-5 mb-5" method="POST">
             <div class="form-group">
                 <label for="username">Nom de l'utilisateur</label>
                 <input type="text" class="form-control" id="username" name="username" required>
@@ -15,11 +24,8 @@
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" required>
             </div>
-            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+            <input type="hidden" value="{{ csrf_token }}" name="csrf_token">
+            <button type="submit" class="btn btn-primary mt-2">Mettre à jour</button>
         </form>
     </div>
-
-    {% if successMessage is defined %}
-        <p>{{ successMessage }}</p>
-    {% endif %}
 {% endblock content %}

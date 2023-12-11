@@ -34,8 +34,7 @@ class ControllerManager
     {
         if ($requestedController === 'HomePageController') {
             $mailer = new Mailer();
-            $model = new Post($this->pdo);
-            $controller = new HomePageController($mailer, $model, $this->twig);
+            $controller = new HomePageController($mailer, $this->twig);
         }
 
         if ($requestedController === 'AboutController') {

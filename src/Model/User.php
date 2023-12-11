@@ -26,11 +26,17 @@ class User
         return $stmt->execute();
     }
 
-    public function modifyUser(string $email, string $password): bool
+    public function modifyUser(string $newUsername, string $newEmail, string $newPassword, int $userId): bool
     {
-        $stmt = $this->db->prepare('UPDATE user SET email = :email, password = :password WHERE id = :userId');
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
+        if ($this->userExists($newUsername, $newEmail)) {
+            return false;
+        }
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        $stmt = $this->db->prepare('UPDATE users SET username = :username, email = :email, password = :password WHERE user_id = :userId');
+        $stmt->bindParam(':username', $newUsername);
+        $stmt->bindParam(':email', $newEmail);
+        $stmt->bindParam(':password', $hashedPassword);
         $stmt->bindParam(':userId', $userId);
         return $stmt->execute();
     }
@@ -50,6 +56,20 @@ class User
         }
 
         return null;
+    }
+
+    public function userExists(string $username, $email): bool
+    {
+        $stmt = $this->db->prepare(
+            'SELECT username, email 
+                   FROM users 
+                   WHERE username = :username AND email = :email
+        ');
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row !== false;
     }
 
     public function login(string $username, string $password): bool

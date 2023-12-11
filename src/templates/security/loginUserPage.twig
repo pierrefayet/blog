@@ -1,23 +1,27 @@
 {% extends 'layout/layout.twig' %}
 {% block content %}
     <h2 class="text-center">Connectez-vous pour pouvoir laisser un commentaire</h2>
-    {% if errorMessage is defined %}
+    {% if params.errorMessage is defined %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ params.errorMessage }}
+        </div>
+    {% elseif errorMessage is defined %}
         <div class="alert alert-danger alert-dismissible" role="alert">
             {{ errorMessage }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endif %}
     <div class="container mt-5 mb-5">
         <form method="POST" action="index.php?method=login&controller=UserController">
             <div class="form-group">
                 <label for="username">Nom de l'utilisateur</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <input type="text" class="form-control" id="username" name="username" >
             </div>
             <div class="form-group">
                 <label for="password">Mot de passe</label>
-                <input type=password class="form-control" id="password" name="password" required>
+                <input type=password class="form-control" id="password" name="password" >
             </div>
             <div class="mt-4">
+                <input type="hidden" value="{{ csrf_token }}" name="csrf_token">
                 <button type="submit" class="btn btn-primary ">Se connecter</button>
                 <a href="index.php?method=register&controller=UserController" class="btn btn-primary">S'inscrire</a>
             </div>

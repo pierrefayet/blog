@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\Post;
+use App\service\checkForm;
 use App\service\Mailer;
 use App\service\SecurityCsrf;
 use PHPMailer\PHPMailer\Exception;
@@ -14,13 +14,11 @@ use Twig\Error\SyntaxError;
 class HomePageController
 {
     private Mailer $mailer;
-    private Post $postModel;
     private Environment $twig;
 
 
-    public function __construct(Mailer $mailer, Post $postModel, Environment $twig)
+    public function __construct(Mailer $mailer, Environment $twig)
     {
-        $this->postModel = $postModel;
         $this->twig = $twig;
         $this->mailer = $mailer;
     }
@@ -36,23 +34,31 @@ class HomePageController
         $params = [];
         $url = "/public/asset/cv/Cv_Pierre_Fayet.pdf";
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            SecurityCsrf::check($_POST);
-            return $this->twig->load('homePage.twig')->render([
-                'cvUrl' => $url
-            ]);
+            if (SecurityCsrf::check($_POST)) {
+                $from_name = $_POST['name'];
+                $from_email = $_POST['email'];
+                $subject = $_POST['subject'];
+                $message = $_POST['message'];
+                $errors = CheckForm::checkFormMail($from_name, $from_email, $subject, $message);
+
+                if (!empty($errors)) {
+                    $params['errorMessage'] = implode('<br>',$errors);
+                }
+
+                if (!$this->mailer->send($from_name, $from_email, $subject, $message)) {
+                    $params['errorMessage'] = ['Un probléme est survenu, veuillez contacter l\'administrateur.'];
+
+                    return $this->twig->load('homePage.twig')->render([
+                        'cvUrl' => $url, 'params' => $params
+                    ]);
+                }
+
+            } else {
+                $params['errorMessage'] = 'Token CSRF invalide';
+            }
+
         }
 
-        $from_name = $_POST['name'];
-        $from_email = $_POST['email'];
-        $subject = $_POST['subject'];
-        $message = $_POST['message'];
-        $this->mailer->send($from_name, $from_email, $subject, $message);
-        if ($this->mailer->send($from_name, $from_email, $subject, $message)) {
-            $params['successMessage'] = 'Un probléme est survenu, veuillez contacter l\'administrateur.';
-            return $this->twig->load('homePage.twig')->render([
-                'cvUrl' => $url, $params
-            ]);
-        }
         return $this->twig->load('homePage.twig')->render([
             'cvUrl' => $url, $params
         ]);

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Comment;
+use App\service\SecurityCsrf;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -27,7 +28,7 @@ class CommentController
     public function show(): string
     {
         $postId = $_GET['postId'];
-        return($this->twig->load('comment/commentForm.html.twig')->render([
+        return ($this->twig->load('comment/commentForm.html.twig')->render([
             'post' => $this->commentModel->getSingleComment($postId)
         ]));
     }
@@ -44,36 +45,30 @@ class CommentController
         $params = [];
         $postId = $_GET['postId'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if ($_POST['csrf'] !== hash('sha256', 'openclassroom')) {
-                $params['successMessage'] = 'Un probléme est survenu, veuillez contacter l\'administrateur.';
-                return $this->twig->load('comment/commentForm.html.twig')->render($params);
-            }
+            if (SecurityCsrf::check($_POST)) {
+                if (!isset($_SESSION['role'])) {
+                    $params['unAuthorize'] = true;
+                    $params['errorMessage'] = 'Vous devez être connecté pour poster un commentaire.';
+                    return $this->twig->load('comment/commentForm.html.twig')->render($params);
+                }
 
-            if (!isset($_SESSION['role'])) {
-                $params['unAuthorize'] = true;
-                $params['errorMessage'] = 'Vous devez être connecté pour poster un commentaire.';
-                return $this->twig->load('comment/commentForm.html.twig')->render($params);
-            }
-
-            // Je soumet le formulaire pour ajouter un commentaire ici
-            if (!empty($_POST['content'])) {
-                $userId = $_SESSION['userId'];
-                $content = $_POST['content'];
-
-                // J'utilise le modèle pour ajouter le commentaire
-                $result = $this->commentModel->insertComment($postId, $userId, $content);
-            }
-
-            if ($result) {
-                $params['successMessage'] = 'Le commentaire a été ajouté avec succès.';
+                if (!empty($_POST['content'])) {
+                    $userId = $_SESSION['userId'];
+                    $content = $_POST['content'];
+                    $result = $this->commentModel->insertComment($postId, $userId, $content);
+                    if ($result) {
+                        $params['successMessage'] = 'Le commentaire a été ajouté avec succès.';
+                    } else {
+                        $params['errorMessage'] = 'Une erreur est survenue lors de l\'ajout d\'un article.';
+                    }
+                }
             } else {
-                $params['errorMessage'] = 'Une erreur est survenue lors de l\'ajout d\'un article.';
+                $params['errorMessage'] = 'Token CSRF invalide';
             }
         }
-        // J'affiche le formulaire d'ajout du commentaire
+
         return $this->twig->load('comment/commentForm.html.twig')->render([
-            $params,
-            'hash' => hash('sha256', 'openclassroom')
+            $params
         ]);
     }
 

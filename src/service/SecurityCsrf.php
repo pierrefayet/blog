@@ -6,9 +6,8 @@ class SecurityCsrf
 {
     public static function check(array $data): bool
     {
-        if (isset($_SESSION['csrf']) && $_SESSION['csrf'] !== $_POST['csrf']) {
+        if (isset($_SESSION['csrf_token']) && $_SESSION['csrf_token'] !== $_POST['csrf_token']) {
             http_response_code(403);
-            echo 'invalid token csrf!';
             return false;
         }
         return true;
