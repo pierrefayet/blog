@@ -33,7 +33,8 @@ class User
         }
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-        $stmt = $this->db->prepare('UPDATE users SET username = :username, email = :email, password = :password WHERE user_id = :userId');
+        $stmt = $this->db->prepare('UPDATE users SET username = :username, email = :email, password = :password 
+                                          WHERE user_id = :userId');
         $stmt->bindParam(':username', $newUsername);
         $stmt->bindParam(':email', $newEmail);
         $stmt->bindParam(':password', $hashedPassword);

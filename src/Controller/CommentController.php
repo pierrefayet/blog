@@ -75,11 +75,11 @@ class CommentController
             $errors = CheckForm::checkFormCommentForm($content);
             if (!empty($errors)) {
                 $params['errorMessage'] = implode('<br>', $errors);
-                return $this->twig->load('comment/commentForm.html.twig')->render($params );
+                return $this->twig->load('comment/commentForm.html.twig')->render($params);
             }
         }
 
-        return $this->twig->load('comment/commentForm.html.twig')->render($params );
+        return $this->twig->load('comment/commentForm.html.twig')->render($params);
     }
 
     public function handlerDeleteComment(): string

@@ -42,7 +42,7 @@ class HomePageController
                 $errors = CheckForm::checkFormMail($from_name, $from_email, $subject, $message);
 
                 if (!empty($errors)) {
-                    $params['errorMessage'] = implode('<br>',$errors);
+                    $params['errorMessage'] = implode('<br>', $errors);
                 }
 
                 if (!$this->mailer->send($from_name, $from_email, $subject, $message)) {
@@ -52,11 +52,9 @@ class HomePageController
                         'cvUrl' => $url, 'params' => $params
                     ]);
                 }
-
             } else {
                 $params['errorMessage'] = 'Token CSRF invalide';
             }
-
         }
 
         return $this->twig->load('homePage.twig')->render([

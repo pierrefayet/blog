@@ -4,15 +4,21 @@ namespace App\service;
 
 class CheckForm
 {
-    public static function checkFormMail( string $from_name, string $from_email, string $subject, string $message): array
+    public static function checkFormMail(string $from_name, string $from_email, string $subject, string $message): array
     {
         $params = [];
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !is_string($from_name) || !is_string($from_email) || !is_string($subject) || !is_string($message)) {
-            $params['errorMessage'] = 'Tous les champs doivent être des chaînes de caractères.';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $inputs = [$from_name, $from_email, $subject, $message];
+            $allStrings = array_filter($inputs, 'is_string') === $inputs;
+
+            if (!$allStrings) {
+                $params['errorMessage'] = 'Tous les champs doivent être des chaînes de caractères.';
+            }
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($from_name) || empty($from_email) || empty($subject) || empty($message)) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($from_name) || empty($from_email) ||
+            empty($subject) || empty($message)) {
             $params['errorMessage'] = 'Tous les champs sont obligatoires.';
         }
 
@@ -38,20 +44,26 @@ class CheckForm
         return $params;
     }
 
-    public static function checkFormRegister(string $username, string $email , string $password): array
+    public static function checkFormRegister(string $username, string $email, string $password): array
     {
         $params = [];
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !is_string($username) || !is_string($email) || !is_string($password)) {
-            $params['errorMessage'] = 'Tous les champs doivent être des chaînes de caractères.';
-        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $inputs = [$username, $email, $password];
+            $allStrings = array_filter($inputs, 'is_string') === $inputs;
+            $allFieldsPresent = !in_array(null, $inputs, true) && !in_array('', $inputs, true);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !is_string($username) || !is_string($email) || !is_string($password)) {
-            $params['errorMessage'] = 'Tous les champs sont obligatoires.';
+            if (!$allStrings) {
+                $params['errorMessage'] = 'Tous les champs doivent être des chaînes de caractères.';
+            } elseif (!$allFieldsPresent) {
+                $params['errorMessage'] = 'Tous les champs sont obligatoires.';
+            }
         }
 
         if (!preg_match('/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/', $password)) {
-            $params['errorMessage'] = 'Le mot de passe doit contenir au moins une majuscule, un caractère spécial et avoir une longueur minimale de 8 caractères.';
+            $params['errorMessage'] =
+                'Le mot de passe doit contenir au moins une majuscule,
+                 un caractère spécial et avoir une longueur minimale de 8 caractères.';
         }
 
         return $params;

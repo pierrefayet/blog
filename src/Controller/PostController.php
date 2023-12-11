@@ -51,12 +51,11 @@ class PostController
                     $params
                 );
             }
-            if (isset($_POST['title']) && isset($_POST['intro']) && isset($_POST['content']) && isset($_POST['author'])) {
+            if (isset($_POST['title']) && isset($_POST['intro']) && isset($_POST['content'])) {
                 $title = $_POST['title'];
                 $intro = $_POST['intro'];
                 $content = $_POST['content'];
                 $author = $_POST['author'];
-
             }
 
             $errors = CheckForm::checkFormPostForm($title, $intro, $content, $author);
@@ -107,7 +106,7 @@ class PostController
             ], $params));
         }
 
-        $result = $this->postModel->modifyPost($title, $intro,  $content, $postId, $author);
+        $result = $this->postModel->modifyPost($title, $intro, $content, $postId, $author);
         if ($result) {
             $params['successMessage'] = 'L\'article a été mis à jour avec succès.';
             $posts = $this->postModel->getAllPosts();

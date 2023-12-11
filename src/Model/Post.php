@@ -13,12 +13,11 @@ class Post
         $this->db = $db;
     }
 
-    public function insertPost(string $title, string$intro, string $content, string $author): bool
+    public function insertPost(string $title, string $intro, string $content, string $author): bool
     {
         $stmt = $this->db->prepare(
             'INSERT INTO posts (title, intro, content, creation_date, author) 
-                                           VALUES (:title, :intro, :content, NOW(), :author)
-                                       ');
+                   VALUES (:title, :intro, :content, NOW(), :author)');
 
         $stmt->bindParam(':title', $title);
         $stmt->bindParam(':intro', $intro);
@@ -27,11 +26,12 @@ class Post
         return $stmt->execute();
     }
 
-    public function modifyPost(string $title, string $intro, string $content, int $postId , string $author): bool
+    public function modifyPost(string $title, string $intro, string $content, int $postId, string $author): bool
     {
         $stmt = $this->db->prepare(
-            'UPDATE posts SET title = :title, intro = :intro, content = :content, creation_date = NOW(), author = :author
-                       WHERE id = :postId
+            'UPDATE posts 
+                   SET title = :title, intro = :intro, content = :content, creation_date = NOW(), author = :author
+                   WHERE id = :postId
             ');
 
         $stmt->bindParam(':title', $title);
@@ -76,9 +76,9 @@ class Post
     {
         $stmt = $this->db->prepare(
             "SELECT comments.content, comments.creation_date, users.username
-                       FROM comments
-                       INNER JOIN users ON comments.comment_user_id = users.user_id
-                       WHERE comments.comment_post_id = :postId AND is_approved = 1
+                   FROM comments
+                   INNER JOIN users ON comments.comment_user_id = users.user_id
+                   WHERE comments.comment_post_id = :postId AND is_approved = 1
             ");
 
         $stmt->bindParam(':postId', $postId);
