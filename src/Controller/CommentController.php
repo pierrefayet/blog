@@ -45,25 +45,29 @@ class CommentController
         $params = [];
         $postId = $_GET['postId'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (SecurityCsrf::check($_POST)) {
-                if (!isset($_SESSION['role'])) {
-                    $params['unAuthorize'] = true;
-                    $params['errorMessage'] = 'Vous devez être connecté pour poster un commentaire.';
-                    return $this->twig->load('comment/commentForm.html.twig')->render($params);
-                }
 
-                if (!empty($_POST['content'])) {
-                    $userId = $_SESSION['userId'];
-                    $content = $_POST['content'];
-                    $result = $this->commentModel->insertComment($postId, $userId, $content);
-                    if ($result) {
-                        $params['successMessage'] = 'Le commentaire a été ajouté avec succès.';
-                    } else {
-                        $params['errorMessage'] = 'Une erreur est survenue lors de l\'ajout d\'un article.';
-                    }
+            if (!SecurityCsrf::check($_POST)) {
+                $params['errorMessage'] = 'Le token CSRF est invalide.';
+                return $this->twig->load('comment/commentForm.html.twig')->render([
+                    $params
+                ]);
+            }
+
+            if (!isset($_SESSION['role'])) {
+                $params['unAuthorize'] = true;
+                $params['errorMessage'] = 'Vous devez être connecté pour poster un commentaire.';
+                return $this->twig->load('comment/commentForm.html.twig')->render($params);
+            }
+
+            if (!empty($_POST['content'])) {
+                $userId = $_SESSION['userId'];
+                $content = $_POST['content'];
+                $result = $this->commentModel->insertComment($postId, $userId, $content);
+                if ($result) {
+                    $params['successMessage'] = 'Le commentaire a été ajouté avec succès.';
+                } else {
+                    $params['errorMessage'] = 'Une erreur est survenue lors de l\'ajout d\'un article.';
                 }
-            } else {
-                $params['errorMessage'] = 'Token CSRF invalide';
             }
         }
 
