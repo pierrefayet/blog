@@ -58,7 +58,7 @@ class User
         return null;
     }
 
-    public function userExists(string $username, $email): bool
+    public function userExists(string $username, string $email): bool
     {
         $stmt = $this->db->prepare(
             'SELECT username, email 

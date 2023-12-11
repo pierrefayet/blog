@@ -4,7 +4,7 @@ namespace App\service;
 
 class CheckForm
 {
-    static function checkFormMail($from_name, $from_email, $subject, $message): array
+    static function checkFormMail( string $from_name, string $from_email, string $subject, string $message): array
     {
         $params = [];
 
@@ -23,7 +23,7 @@ class CheckForm
         return $params;
     }
 
-    static function checkFormLogin($username, $password): array
+    static function checkFormLogin(string $username, string $password): array
     {
         $params = [];
 
@@ -38,7 +38,7 @@ class CheckForm
         return $params;
     }
 
-    static function checkFormRegister($username, $email , $password): array
+    static function checkFormRegister(string $username, string $email , string $password): array
     {
         $params = [];
 
@@ -57,7 +57,7 @@ class CheckForm
         return $params;
     }
 
-    static function checkFormCommentForm($content): array
+    static function checkFormCommentForm(string $content): array
     {
         $params = [];
 
@@ -72,7 +72,7 @@ class CheckForm
         return $params;
     }
 
-    static function checkFormPostForm($title, $intro, $content, $author): array
+    static function checkFormPostForm(string $title, string $intro, string $content, string $author): array
     {
         $errors = [];
 
