@@ -1,32 +1,33 @@
 {% extends 'layout/layout.twig' %}
 {% block content %}
-    {% if errorMessage is defined %}
-        <div class="alert alert-danger alert-dismissible" role="alert">
-            {{ errorMessage }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    {% if errorMessages is defined and errorMessages is not empty %}
+        <ul class="alert alert-danger">
+            {% for error in errorMessages %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
     {% endif %}
     <div class="container">
         <h2 class="mt-5">Modifier l'article</h2>
         <form method="POST" action="index.php?method=update&controller=PostController&postId={{ post.id }}">
             <div class="form-group">
                 <label for="title">Titre de l'article :</label>
-                <textarea class="form-control" id="title" name="title">{{ post.title }}</textarea>
+                <textarea class="form-control" id="title" name="title">{{ post.title }} required </textarea>
             </div>
             <div class="form-group">
                 <label for="intro">Chapô</label>
-                <textarea class="form-control" id="intro" name="intro">{{ post.intro }}</textarea>
+                <textarea class="form-control" id="intro" name="intro">{{ post.intro }} required</textarea>
             </div>
             <div class="form-group">
                 <label for="content">Contenu de l'article :</label>
-                <textarea class="form-control" id="content" name="content">{{ post.content }}</textarea>
+                <textarea class="form-control" id="content" name="content">{{ post.content }} required</textarea>
             </div>
             <div class="form-group">
                 <label for="author">Auteur</label>
-                <textarea class="form-control" id="author" name="author">{{ post.author }}</textarea>
+                <textarea class="form-control" id="author" name="author">{{ post.author }} required </textarea>
             </div>
-            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+            <input type="hidden" name="csrf" value="{{ csrf }}">
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications required</button>
         </form>
     </div>
 {% endblock %}

@@ -21,7 +21,7 @@
                 <input type=password class="form-control" id="password" name="password" >
             </div>
             <div class="mt-4">
-                <input type="hidden" value="{{ csrf_token }}" name="csrf_token">
+                <input type="hidden" value="{{ csrf }}" name="csrf">
                 <button type="submit" class="btn btn-primary ">Se connecter</button>
                 <a href="index.php?method=register&controller=UserController" class="btn btn-primary">S'inscrire</a>
             </div>

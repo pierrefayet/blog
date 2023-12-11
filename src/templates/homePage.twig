@@ -16,7 +16,7 @@
                             <input type="text" class="form-control" id="name" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="subject" class="form-label">Subject</label>
+                            <label for="subject" class="form-label">Sujet</label>
                             <input type="text" class="form-control" id="subject" name="subject" required>
                         </div>
                         <div class="mb-3">
@@ -28,7 +28,7 @@
                             <textarea class="form-control" id="message" rows="8" name="message"
                                       required></textarea>
                         </div>
-                        <input type="hidden" value="{{ csrf_token }}" name="csrf_token">
+                        <input type="hidden" value="{{ csrf }}" name="csrf">
                         <button type="submit" class="btn btn-primary">Envoyer</button>
                     </form>
                     {% if params.errorMessage is defined %}

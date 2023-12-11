@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Model\User;
-use App\service\checkForm;
+use App\service\CheckForm;
 use App\service\SecurityCsrf;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -81,7 +81,7 @@ class UserController
 
                     if (!$this->model->login($username, $password)) {
                         $params['errorMessage'] = '
-                     Échec de connexion, si vous n\'avez pas de compre veuillez vous inscrire, sinon veuillez réessayer.
+                     Échec de connexion, si vous n\'avez pas de compte veuillez vous inscrire, sinon veuillez réessayer.
                      ';
                     }
                 } else {

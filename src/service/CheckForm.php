@@ -2,7 +2,7 @@
 
 namespace App\service;
 
-class checkForm
+class CheckForm
 {
     static function checkFormMail($from_name, $from_email, $subject, $message): array
     {
@@ -56,4 +56,42 @@ class checkForm
 
         return $params;
     }
+
+    static function checkFormCommentForm($content): array
+    {
+        $params = [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !is_string($content)) {
+            $params['errorMessage'] = 'Tous les champs doivent être des chaînes de caractères.';
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($content)) {
+            $params['errorMessage'] = 'Le champs contenu du commentaire  est obligatoires.';
+        }
+
+        return $params;
+    }
+
+    static function checkFormPostForm($title, $intro, $content, $author): array
+    {
+        $errors = [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (empty($title)) {
+                $errors[] = 'Le titre est obligatoire.';
+            }
+            if (empty($intro)) {
+                $errors[] = 'Le chapô est obligatoire.';
+            }
+            if (empty($content)) {
+                $errors[] = 'Le contenu est obligatoire.';
+            }
+            if (empty($author)) {
+                $errors[] = 'L\'auteur est obligatoire.';
+            }
+        }
+
+        return $errors;
+    }
+
 }

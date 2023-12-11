@@ -1,12 +1,12 @@
 {% extends 'layout/layout.twig' %}
 {% block content %}
-    {% if params.errorMessage is defined %}
-        <div class="alert alert-danger alert-dismissible" role="alert">
-            {{ params.errorMessage }}
-        </div>
-    {% elseif errorMessage is defined %}
+    {% if errorMessage is defined %}
         <div class="alert alert-danger alert-dismissible" role="alert">
             {{ errorMessage }}
+        </div>
+    {% elseif successMessage is defined %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ successMessage }}
         </div>
     {% endif %}
     <div class="container">
@@ -26,18 +26,11 @@
                     <a href="index.php?method=deleteComment&controller=commentController&postId={{ comment.id }}"
                        class="btn btn-outline-danger mb">Supprimer</a>
                 {% else %}
-                    <input type="hidden" value="{{ csrf_token }}" name="csrf">
+                    <input type="hidden" value="{{ csrf }}" name="csrf">
                     <input type="submit" class="btn btn-primary" value="Ajouter" />
                 {% endif %}
             </div>
         </form>
         {% endif %}
     </div>
-    {% if successMessage is defined %}
-        <div class="alert alert-success">{{ successMessage }}</div>
-    {% endif %}
-
-    {% if errorMessage is defined %}
-        <div class="alert alert-danger">{{ errorMessage }}</div>
-    {% endif %}
 {% endblock %}

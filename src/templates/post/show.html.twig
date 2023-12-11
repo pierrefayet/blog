@@ -22,12 +22,15 @@
                             </div>
                         {% endif %}
                         {% if session['role'] is defined and session['role'] == "admin" %}
+                            <input type="hidden" name="csrf" value="{{ csrf }}">
                             <a href="index.php?method=update&controller=PostController&postId={{ post.id }}"
                                type="submit" class="btn btn-primary">Modifier</a>
+                            <input type="hidden" name="csrf" value="{{ csrf }}">
                             <a href="index.php?method=deletePost&controller=PostController&postId={{ post.id }}"
                                type="submit" class="btn btn-outline-danger mb">Supprimer</a>
                         {% endif %}
                         {% if session['role'] is defined %}
+                            <input type="hidden" name="csrf" value="{{ csrf }}">
                             <a href="index.php?method=addComment&controller=CommentController&postId={{ post.id }}"
                                type="submit" class="btn btn-primary">Commenter</a>
                         {% endif %}

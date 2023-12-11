@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\service\checkForm;
+use App\service\CheckForm;
 use App\service\Mailer;
 use App\service\SecurityCsrf;
 use PHPMailer\PHPMailer\Exception;

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Comment;
+use App\service\CheckForm;
 use App\service\SecurityCsrf;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -45,23 +46,24 @@ class CommentController
         $params = [];
         $postId = $_GET['postId'];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            if (!SecurityCsrf::check($_POST)) {
-                $params['errorMessage'] = 'Le token CSRF est invalide.';
-                return $this->twig->load('comment/commentForm.html.twig')->render([
-                    $params
-                ]);
-            }
-
             if (!isset($_SESSION['role'])) {
                 $params['unAuthorize'] = true;
                 $params['errorMessage'] = 'Vous devez être connecté pour poster un commentaire.';
                 return $this->twig->load('comment/commentForm.html.twig')->render($params);
             }
 
+            if (false === SecurityCsrf::check($_POST)) {
+                $params['errorMessage'] = 'Le token CSRF est invalide.';
+                return $this->twig->load('comment/commentForm.html.twig')->render($params);
+            }
+
             if (!empty($_POST['content'])) {
                 $userId = $_SESSION['userId'];
                 $content = $_POST['content'];
+                if (!empty($errors)) {
+                    $params['errorMessage'] = implode('<br>', $errors);
+                }
+
                 $result = $this->commentModel->insertComment($postId, $userId, $content);
                 if ($result) {
                     $params['successMessage'] = 'Le commentaire a été ajouté avec succès.';
@@ -69,11 +71,15 @@ class CommentController
                     $params['errorMessage'] = 'Une erreur est survenue lors de l\'ajout d\'un article.';
                 }
             }
+
+            $errors = CheckForm::checkFormCommentForm($content);
+            if (!empty($errors)) {
+                $params['errorMessage'] = implode('<br>', $errors);
+                return $this->twig->load('comment/commentForm.html.twig')->render($params );
+            }
         }
 
-        return $this->twig->load('comment/commentForm.html.twig')->render([
-            $params
-        ]);
+        return $this->twig->load('comment/commentForm.html.twig')->render($params );
     }
 
     public function handlerDeleteComment(): string
