@@ -7,8 +7,6 @@ use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
-
-//header("Content-Security-Policy: default-src 'self'; style-src 'sha256-UgnL11z+SR8dKzcxIq4hE3ae7TCz4bDUqxj5DkO5hnw=' 'sha256-bo/xnuHMJnX4ybzTCeW3ntUlXYFVxSLkHuF6EPB4u8M=';");
 require_once '../vendor/autoload.php';
 Debugger::enable();
 $dbConnect = new DbConnect('localhost', 'blog', 'nareendel', 'Aa19071985.');
