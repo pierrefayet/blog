@@ -17,6 +17,11 @@ h2, h3, h4 {
     font-family: "Rethink Sans", sans-serif;
 }
 
+.text-center {
+    color: #333;
+    font-family: "Rethink Sans", sans-serif;
+}
+
 p {
     color: #333;
     font-family: "Comic Neue", sans-serif;
