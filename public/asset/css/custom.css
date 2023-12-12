@@ -1,14 +1,30 @@
-@import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;500;600;700;800&display=swap');
 
 footer {
     background: rgb(63 184 251);
     background: linear-gradient(90deg, rgba(63 184 251 / 100%), rgba(70 239 252 / 100%));
 }
 
+body {
+    justify-content: center;
+    color: #E4D2BA;
 
-h2, h3 {
+}
+
+h2, h3, h4 {
     color: #333;
-    font-family: "Comic Neue", cursive;
+    font-family: "Rethink Sans", sans-serif;
+}
+
+p {
+    color: #333;
+    font-family: "Comic Neue", sans-serif;
+}
+
+label {
+    color: #333;
+    font-family: "Rethink Sans", sans-serif;
 }
 
 .custom-card {
