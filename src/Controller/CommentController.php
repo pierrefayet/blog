@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Model\Comment;
-use App\service\CheckForm;
-use App\service\SecurityCsrf;
+use App\Service\CheckForm;
+use App\Service\SecurityCsrf;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;

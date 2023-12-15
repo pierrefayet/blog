@@ -1,6 +1,6 @@
 <?php
 
-use App\config\DbConnect;
+use App\Config\DbConnect;
 use App\Manager\ControllerManager;
 use Tracy\Debugger;
 use Twig\Environment;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\service;
+namespace App\Service;
 
 class SecurityCsrf
 {
@@ -8,7 +8,7 @@ class SecurityCsrf
     {
         if (isset($_SESSION['csrf']) && $_SESSION['csrf'] !== $_POST['csrf']) {
             http_response_code(403);
-
+            unset($_SESSION['csrf']);
             return false;
         }
         return true;

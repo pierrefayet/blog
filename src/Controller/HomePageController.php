@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\service\CheckForm;
-use App\service\Mailer;
-use App\service\SecurityCsrf;
+use App\Service\CheckForm;
+use App\Service\Mailer;
+use App\Service\SecurityCsrf;
 use PHPMailer\PHPMailer\Exception;
 use Twig\Environment;
 use Twig\Error\LoaderError;

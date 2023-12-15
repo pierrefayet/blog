@@ -11,7 +11,7 @@ use App\Controller\UserController;
 use App\Model\Comment;
 use App\Model\User;
 use App\Model\Post;
-use App\service\Mailer;
+use App\Service\Mailer;
 use PDO;
 use Twig\Environment;
 

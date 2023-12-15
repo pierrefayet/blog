@@ -33,7 +33,7 @@ composer require phpmailer/phpmailer
 To set up the database for this project, you can use the provided SQL dump located at /config/blog.sql
 You can import this SQL file into your database, to create the necessary tables and initial data.
 ```bash
-mysql -u your_username -p your_database_name < /src/config/blog.sql
+mysql -u your_username -p your_database_name < /src/Config/blog.sql
 ```
 
 ## Runnnig the local server
@@ -41,7 +41,8 @@ mysql -u your_username -p your_database_name < /src/config/blog.sql
 To run the project locally, you can use the following command to start the server:
 ```bash
 php -S localhost:8080
-
 ```
+You can access the locally deployed website by visiting the following URL:
+http://localhost:8080/index.php?method=home&controller=HomePageController
 
 Enjoy using my project!
