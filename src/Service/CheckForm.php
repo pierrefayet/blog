@@ -69,7 +69,16 @@ class CheckForm
         return $params;
     }
 
+    /**
+     * Checks the form input for comment submission.
+     *
+     * @param string $content The content of the comment.
+     * @return array An array containing any error messages.
+     */
     public static function checkFormCommentForm(string $content): array
+    {
+        // Function implementation...
+    }
     {
         $params = [];
 
