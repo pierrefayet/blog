@@ -10,7 +10,9 @@ class SecurityCsrf
             http_response_code(403);
             unset($_SESSION['csrf']);
             return false;
+
         }
         return true;
+        
     }
 }
