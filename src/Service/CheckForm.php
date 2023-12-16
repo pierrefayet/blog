@@ -77,9 +77,6 @@ class CheckForm
      */
     public static function checkFormCommentForm(string $content): array
     {
-        // Function implementation...
-    }
-    {
         $params = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !is_string($content)) {
