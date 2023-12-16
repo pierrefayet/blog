@@ -28,7 +28,10 @@ class CommentController
      */
     public function show(): string
     {
-        $postId = $_GET['postId'];
+        $postId = filter_input(INPUT_GET, 'postId', FILTER_SANITIZE_NUMBER_INT);
+        if ($postId === null || $postId === false) {
+            // Handle the error: postId is missing or is not a valid integer
+        }
         return ($this->twig->load('comment/commentForm.html.twig')->render([
             'post' => $this->commentModel->getSingleComment($postId)
         ]));
