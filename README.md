@@ -20,11 +20,8 @@ After cloning the repository, navigate to the project directory and use Composer
 cd project-directory
 composer install
 ```
-## Third Step: Installing the Mailer Service
-For the mailer service, please install PHPMailer with Composer.
-```bash
-composer require phpmailer/phpmailer
-```
+## Third Step: the Mailer Service
+
  if you need more information, please consult the PHPMailer documentation at this address
  https://github.com/PHPMailer/PHPMailer.
 
