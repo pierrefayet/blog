@@ -1,0 +1,36 @@
+{% extends 'layout/layout.twig' %}
+{% block content %}
+    {% if errorMessage is defined %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ errorMessage }}
+        </div>
+    {% elseif successMessage is defined %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ successMessage }}
+        </div>
+    {% endif %}
+    <div class="container">
+        <h2>Commentaire</h2>
+        {% if unAuthorize is not defined or false == unAuthorize  %}
+        <form method="POST">
+            <div class="form-group">
+                <label for="content">Contenu du commentaire</label>
+                <textarea class="form-control" id="content" name="content" rows="5" required>
+                    {% if comment is defined %}
+                        {{ comment.content }}
+                    {% endif %}</textarea>
+            </div>
+            <div class="mt-2 mb-2">
+                {% if comment is defined %}
+                    <input type="submit" class="btn btn-primary" value="Modifier">
+                    <a href="index.php?method=deleteComment&controller=commentController&postId={{ comment.id }}"
+                       class="btn btn-outline-danger mb">Supprimer</a>
+                {% else %}
+                    <input type="hidden" value="{{ csrf }}" name="csrf">
+                    <input type="submit" class="btn btn-primary" value="Ajouter" />
+                {% endif %}
+            </div>
+        </form>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'layout/layout.twig' %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="mt-5">Listes des commentaires publiés:</h2>
+        <div class="row mt-4">
+            {% for comment in comments %}
+                {% include 'post/listing.twig' with {'comment': comment} %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

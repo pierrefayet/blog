@@ -1,0 +1,5 @@
+# Empêche l'indexation des images par les robots
+
+User-agent: *
+Disallow: /images/
+Allow: /

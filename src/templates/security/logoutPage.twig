@@ -1,0 +1,9 @@
+{% extends 'layout/layout.twig' %}
+{% block content %}
+    {% if app.session.get('logout_message') is defined %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ app.session.get('logout_message') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,13 @@
+{
+  "name": "Blog PHP - Projet 5 - Développeur d'application PHP",
+  "short_name": "Blog PHP",
+  "start_url": "http://localhost:8080/src/index.php?method=home&controller=HomePageController",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "public/asset/img/favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

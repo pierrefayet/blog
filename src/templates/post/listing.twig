@@ -1,0 +1,27 @@
+{% extends 'layout/layout.twig' %}
+{% block content %}
+    {% if succesMessage is defined %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ succesMessage }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+<div class="container">
+    <h2 class="mt-5 text-black-60 text-center">Listes des articles publiés:</h2>
+    <div class="row mt-4">
+        {% for post in posts %}
+            <div class="col-md-6 mb-4">
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <h2 class="card-title text-black-70 text-center">{{ post.title }}</h2>
+                        <p class="card-text text-black-60">{{ post.intro}}</p>
+                        <p class="card-text text-black-60">{{ post.creation_date }}</p>
+                        <a href="index.php?method=show&controller=PostController&postId={{ post.id }}">
+                            Afficher plus...</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

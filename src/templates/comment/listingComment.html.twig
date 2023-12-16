@@ -1,0 +1,39 @@
+{% extends 'layout/layout.twig' %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="mt-5">Listes des commentaires publiés soumis à la modération:</h2>
+        <div class="row mt-4">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Titre du commentaire</th>
+                    <th scope="col">Auteur</th>
+                    <th scope="col">Contenu</th>
+                    <th scope="col">Date de création</th>
+                    <th scope="col">Validation</th>
+                    <th scope="col">Suppression</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for comment in comments %}
+                    <tr>
+                        <th scope="row"></th>
+                        <td>{{ comment.title }}</td>
+                        <td>{{ comment.username }}</td>
+                        <td>{{ comment.content }}</td>
+                        <td>{{ comment.creation_date }}</td>
+                        <td>
+                            <a href="index.php?method=handlerApproveComment&controller=CommentController&commentId={{ comment.id }}"><img src="../public/asset/img/check.png" alt="Validate"></a>
+                        </td>
+                        <td>
+                            <a href="index.php?method=handlerDeleteComment&controller=CommentController&commentId={{ comment.id }}"><img src="../public/asset/img/rejected.png" alt="Refusé"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
